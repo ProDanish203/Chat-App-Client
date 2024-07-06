@@ -1,4 +1,4 @@
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, Phone, User } from "lucide-react";
 import Image from "next/image";
 
 interface Props {
@@ -34,15 +34,18 @@ export const ConversationHeader = ({
         </div>
       </div>
       <div className="flex items-center gap-x-2">
-        <button className="group relative h-12 w-24 overflow-hidden overflow-x-hidden bg-transparent px-5 text-text border border-secondaryCol hover:text-textDark rounded-full">
-          <span className="relative z-10">Profile</span>
+        <button className="group relative lg:h-12 lg:w-24 max-lg:size-10 max-lg:center overflow-hidden overflow-x-hidden bg-transparent px-5 text-text border border-secondaryCol hover:text-textDark rounded-full">
+          <span className="max-lg:hidden relative z-10">Profile</span>
+          <span className="lg:hidden">
+            <User className="size-5" />
+          </span>
           <span className="absolute inset-0 overflow-hidden rounded-md">
             <span className="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-secondaryCol transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span>
           </span>
         </button>
 
-        <button className="group relative h-12 w-24 rounded-full bg-secondaryCol px-4 text-textDark">
-          <span className="relative inline-flex overflow-hidden">
+        <button className="group relative lg:h-12 lg:w-24 max-lg:size-10 max-lg:center rounded-full bg-secondaryCol px-4 text-textDark">
+          <span className="max-lg:hidden relative inline-flex overflow-hidden">
             <div className="translate-y-0 skew-y-0 transition duration-500 group-hover:-translate-y-[110%] group-hover:skew-y-12">
               Call
             </div>
@@ -50,9 +53,12 @@ export const ConversationHeader = ({
               Call
             </div>
           </span>
+          <span className="lg:hidden">
+            <Phone className="size-5" />
+          </span>
         </button>
 
-        <button className="relative overflow-hidden size-12 center rounded-full bg-white border border-secondaryCol text-text duration-300 hover:bg-secondaryCol hover:text-textDark [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90">
+        <button className="relative overflow-hidden lg:size-12 size-10 center rounded-full bg-white border border-secondaryCol text-text duration-300 hover:bg-secondaryCol hover:text-textDark [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90">
           <EllipsisVertical />
         </button>
       </div>

@@ -33,12 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} ${roboto.variable}`}>
+      <body
+        className={`${poppins.className} ${roboto.variable} overflow-x-hidden`}
+      >
         <ReactQueryProvider>
           <AuthProvider>
             <TooltipProvider delayDuration={200} disableHoverableContent>
               <Toaster position="top-right" />
-              <main className="flex gap-x-3 relative bg-bg sm:p-5 min-h-screen">
+              <main className="flex gap-x-3 relative bg-bg md:p-5 min-h-screen">
                 <Sidebar />
                 {children}
               </main>

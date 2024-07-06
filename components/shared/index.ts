@@ -1,3 +1,5 @@
+import { AddFriends } from "./AddFriends";
+import { Message } from "./Message";
 import { ChatUser } from "./ChatUser";
 import { Chats } from "./Chats";
 import { ChatHeader } from "./ChatHeader";
@@ -16,4 +18,6 @@ export {
   Chats,
   ChatUser,
   Conversation,
+  Message,
+  AddFriends,
 };

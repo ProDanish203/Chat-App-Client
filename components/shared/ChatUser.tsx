@@ -6,6 +6,7 @@ interface Props {
   username: string;
   lastMessage: string;
   lastMessageTime: string;
+  isActive?: boolean;
 }
 
 export const ChatUser = ({
@@ -14,9 +15,14 @@ export const ChatUser = ({
   username,
   lastMessage,
   lastMessageTime,
+  isActive,
 }: Props) => {
   return (
-    <div className="flex items-center gap-x-4 py-3 border-b border-b-neutral-200 w-full">
+    <div
+      className={`flex items-center gap-x-4 py-3 px-5 ${
+        isActive ? "bg-hoverCol" : "border-b border-b-neutral-200"
+      }  w-full cursor-pointer hover:bg-hoverCol transition-all duration-100`}
+    >
       <Image
         src={userImage || "/images/dummy-user.webp"}
         alt="user"
@@ -27,9 +33,11 @@ export const ChatUser = ({
 
       <div className="flex flex-col gap-y-1 w-full">
         <h4 className="font-semibold text-text">{username}</h4>
-        <p className="text-sm text-neutral-400 truncate font-roboto">
-          {lastMessage}
-        </p>
+        {lastMessage && (
+          <p className="text-sm text-neutral-400 truncate font-roboto">
+            {lastMessage}
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col self-start gap-y-2 items-end text-right w-full">

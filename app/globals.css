@@ -102,3 +102,20 @@
   background-color: var(--bg);
   opacity: 0.5;
 }
+
+
+.msg-radius{
+  border-radius: 20px 20px 20px 0px;
+  -webkit-border-radius: 20px 20px 20px 0px;
+  -moz-border-radius: 20px 20px 20px 0px;
+  -ms-border-radius: 20px 20px 20px 0px;
+  -o-border-radius: 20px 20px 20px 0px;
+}
+
+.msg-radius-user{
+  border-radius: 20px 20px 0px 20px;
+  -webkit-border-radius: 20px 20px 0px 20px;
+  -moz-border-radius: 20px 20px 0px 20px;
+  -ms-border-radius: 20px 20px 0px 20px;
+  -o-border-radius: 20px 20px 0px 20px;
+}
