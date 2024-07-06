@@ -34,7 +34,7 @@ export const ChatUser = ({
       <div className="flex flex-col gap-y-1 w-full">
         <h4 className="font-semibold text-text">{username}</h4>
         {lastMessage && (
-          <p className="text-sm text-neutral-400 truncate font-roboto">
+          <p className="text-sm text-neutral-400 line-clamp-1 font-roboto">
             {lastMessage}
           </p>
         )}

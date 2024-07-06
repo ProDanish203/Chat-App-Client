@@ -8,6 +8,7 @@ export const Conversation = () => {
         {messagesData && messagesData.length > 0 ? (
           messagesData.map((message, index) => (
             <Message
+              key={index}
               message={message.message}
               isCurrentUser={message.isCurrentUser}
               userImage={message.userImage}

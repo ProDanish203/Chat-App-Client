@@ -1,5 +1,6 @@
 import { EllipsisVertical, Phone, User } from "lucide-react";
 import Image from "next/image";
+import { ConversationOptions } from "./ConversationOptions";
 
 interface Props {
   userImage: string;
@@ -58,9 +59,7 @@ export const ConversationHeader = ({
           </span>
         </button>
 
-        <button className="relative overflow-hidden lg:size-12 size-10 center rounded-full bg-white border border-secondaryCol text-text duration-300 hover:bg-secondaryCol hover:text-textDark [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90">
-          <EllipsisVertical />
-        </button>
+        <ConversationOptions />
       </div>
     </div>
   );

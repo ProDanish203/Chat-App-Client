@@ -26,7 +26,7 @@ export const Sidebar = () => {
                 className={`size-5 ${isMessages && "text-primaryCol"}`}
               />
             </Link>
-            <TooltipContent side="right">Messages</TooltipContent>
+            <TooltipContent side="right">Chats</TooltipContent>
           </TooltipTrigger>
         </Tooltip>
         <Tooltip>

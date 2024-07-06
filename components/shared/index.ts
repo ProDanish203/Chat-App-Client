@@ -1,3 +1,4 @@
+import { ConversationOptions } from "./ConversationOptions";
 import { AddFriends } from "./AddFriends";
 import { Message } from "./Message";
 import { ChatUser } from "./ChatUser";
@@ -15,6 +16,7 @@ export {
   Sidebar,
   UserProfile,
   ConversationHeader,
+  ConversationOptions,
   Chats,
   ChatUser,
   Conversation,

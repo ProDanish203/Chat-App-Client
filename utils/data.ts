@@ -17,7 +17,7 @@ export const Chatdata = [
     unreadMessages: 1,
     userImage: "/images/dummy-user.webp",
     username: "Bob",
-    lastMessage: "Goodbye!",
+    lastMessage: "Goodbye lorem10kjashd asdhgas ashgd hasgdjhgasjhdg asgdjhasgjhdasgdjas dasjdgas dgas dasjgdj asgjdg asjdgjas gdjasgjdgjas djgasdjgasjhd asgdjhasgd!",
     lastMessageTime: "2:15 PM",
   },
   {
