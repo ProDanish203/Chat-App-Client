@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/store/AuthProvider";
 import ReactQueryProvider from "@/store/ReactQueryProvider";
 import { Toaster } from "sonner";
+import { Poppins, Roboto } from "next/font/google";
+import { Sidebar } from "@/components/shared";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  display: "swap",
+  variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,11 +33,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${poppins.className} ${roboto.variable}`}>
         <ReactQueryProvider>
           <AuthProvider>
-            <Toaster position="top-right" />
-            <main className="">{children}</main>
+            <TooltipProvider delayDuration={200} disableHoverableContent>
+              <Toaster position="top-right" />
+              <main className="flex gap-x-3 relative bg-bg sm:p-5 min-h-screen">
+                <Sidebar />
+                {children}
+              </main>
+            </TooltipProvider>
           </AuthProvider>
         </ReactQueryProvider>
       </body>

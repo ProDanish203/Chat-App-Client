@@ -33,6 +33,13 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --primaryCol: #ff4a09;
+    --secondaryCol: #010019;
+    --bg: #eeeeee;
+    --hoverCol: #e9e9e9;
+    --text: #111;
+    --textDark: #fff;
   }
 
   .dark {
@@ -71,6 +78,27 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply overflow-x-hidden;
   }
+  .center {
+    @apply flex items-center justify-center;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primaryCol);
+  border-radius: var(--radius);
+  -webkit-border-radius: var(--radius);
+  -moz-border-radius: var(--radius);
+  -ms-border-radius: var(--radius);
+  -o-border-radius: var(--radius);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg);
+  opacity: 0.5;
 }

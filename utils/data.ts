@@ -1,1 +1,125 @@
-export const navLink = [{ name: "Home", path: "/" }];
+export const Chatdata = [
+    {
+        unreadMessages: 2,
+        userImage: "/images/dummy-user.webp",
+        username: "John",
+        lastMessage: "Hello!",
+        lastMessageTime: "10:30 AM",
+    },
+    {
+        unreadMessages: 0,
+        userImage: "/images/dummy-user.webp",
+        username: "Alice",
+        lastMessage: "How are you?",
+        lastMessageTime: "11:45 AM",
+    },
+    {
+        unreadMessages: 1,
+        userImage: "/images/dummy-user.webp",
+        username: "Bob",
+        lastMessage: "Goodbye!",
+        lastMessageTime: "2:15 PM",
+    },
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+    {
+        unreadMessages: 3,
+        userImage: "/images/dummy-user.webp",
+        username: "Emma",
+        lastMessage: "Nice to meet you!",
+        lastMessageTime: "4:20 PM",
+    },
+    {
+        unreadMessages: 0,
+        userImage: "/images/dummy-user.webp",
+        username: "Michael",
+        lastMessage: "See you later!",
+        lastMessageTime: "6:30 PM",
+    },
+    {
+        unreadMessages: 1,
+        userImage: "/images/dummy-user.webp",
+        username: "Olivia",
+        lastMessage: "What's up?",
+        lastMessageTime: "8:45 PM",
+    },
+    {
+        unreadMessages: 0,
+        userImage: "/images/dummy-user.webp",
+        username: "David",
+        lastMessage: "I'm fine, thanks!",
+        lastMessageTime: "9:10 PM",
+    },
+    {
+        unreadMessages: 2,
+        userImage: "/images/dummy-user.webp",
+        username: "Sophia",
+        lastMessage: "Have a great day!",
+        lastMessageTime: "10:00 PM",
+    },
+    {
+        unreadMessages: 0,
+        userImage: "/images/dummy-user.webp",
+        username: "James",
+        lastMessage: "Take care!",
+        lastMessageTime: "11:20 PM",
+    },
+    {
+        unreadMessages: 1,
+        userImage: "/images/dummy-user.webp",
+        username: "Emily",
+        lastMessage: "See you tomorrow!",
+        lastMessageTime: "12:05 AM",
+    },
+];
