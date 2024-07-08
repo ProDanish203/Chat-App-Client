@@ -4,7 +4,7 @@ import { AddFriends, RequestSlider } from "@/components/shared";
 
 const RequestPage = () => {
   return (
-    <MainLayout>
+    <MainLayout >
       <section className="w-full relative">
         <div className=" bg-white py-5 px-5 rounded-2xl shadow-md">
           <div className="flex items-center gap-x-5">

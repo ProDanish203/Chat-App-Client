@@ -4,7 +4,7 @@ import { Message } from "./Message";
 export const Conversation = () => {
   return (
     <div className="relative mt-3 overflow-y-auto max-h-[75vh] h-full flex items-end gap-x-3 w-full bg-white py-3 rounded-2xl shadow-md">
-      <div className="relative flex flex-col gap-y-3 px-5 pt-10 mb-5 w-full overflow-y-auto h-full">
+      <div className="relative flex flex-col gap-y-3 sm:px-5 px-2 pt-10 mb-5 w-full overflow-y-auto h-full">
         {messagesData && messagesData.length > 0 ? (
           messagesData.map((message, index) => (
             <Message

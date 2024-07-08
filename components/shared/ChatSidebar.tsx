@@ -3,7 +3,7 @@ import { Chatdata } from "@/utils/data";
 
 export const ChatSidebar = () => {
   return (
-    <div className="bg-white py-3 rounded-2xl mt-3 sm:h-[85vh] h-[87vh] shadow-md overflow-y-auto">
+    <div className="bg-white py-3 rounded-2xl mt-3 sm:h-[85vh] h-[75vh] shadow-md overflow-y-auto">
       {Chatdata.length > 0 ? (
         Chatdata.map((chat, index) => (
           <ChatUser

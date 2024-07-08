@@ -63,10 +63,21 @@ export const SendChat = () => {
   });
 
   return (
-    <div className="relative mt-3 flex items-center gap-x-2 h-[8vh]">
+    <div className="relative mt-3 flex items-center gap-x-2 h-[8vh] min-h-[8vh]">
       {/* Input */}
-      <div className="w-[87%] bg-white py-3 px-5 rounded-2xl shadow-md h-full flex items-center justify-between">
+      <div className="sm:w-[87%] w-full bg-white py-3 px-5 rounded-2xl shadow-md h-full flex items-center justify-between">
         <div className="flex items-center gap-x-3 w-full">
+          <div className="relative" ref={emojiRef}>
+            <button onClick={() => setShowEmojis((prev) => !prev)}>
+              <Smile className="size-5 cursor-pointer" />
+            </button>
+            <EmojiPicker
+              onEmojiClick={(emoji) => setMessage((prev) => prev + emoji.emoji)}
+              open={showEmojis}
+              className="!absolute bottom-10 left-0"
+              lazyLoadEmojis
+            />
+          </div>
           <label htmlFor="file" className="text-secondaryCol cursor-pointer">
             <Paperclip className="size-5" />
           </label>
@@ -89,15 +100,13 @@ export const SendChat = () => {
             }
           />
         </div>
-        <div className="relative" ref={emojiRef}>
-          <button onClick={() => setShowEmojis((prev) => !prev)}>
-            <Smile className="size-5 cursor-pointer" />
+        <div className="sm:hidden relative flex items-center gap-x-2">
+          <button>
+            <Mic className="size-5 cursor-pointer" />
           </button>
-          <EmojiPicker
-            onEmojiClick={(emoji) => setMessage((prev) => prev + emoji.emoji)}
-            open={showEmojis}
-            className="!absolute bottom-10 right-0"
-          />
+          <button>
+            <Send className="size-5 cursor-pointer" />
+          </button>
         </div>
       </div>
 
@@ -107,7 +116,7 @@ export const SendChat = () => {
       )}
 
       {/* Action Buttons */}
-      <div className=" flex items-center gap-x-2 h-full max-md:pr-2">
+      <div className="max-sm:hidden flex items-center gap-x-2 h-full max-md:pr-2">
         <button
           type="button"
           className="center w-full h-full bg-white py-3 px-5 rounded-2xl shadow-md cursor-pointer text-text

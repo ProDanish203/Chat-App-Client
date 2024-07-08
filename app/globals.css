@@ -90,7 +90,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--primaryCol);
+  background-color: var(--secondaryCol);
   border-radius: var(--radius);
   -webkit-border-radius: var(--radius);
   -moz-border-radius: var(--radius);

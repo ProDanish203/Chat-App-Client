@@ -32,7 +32,7 @@ export const Message = ({
             alt="user-image"
             width={200}
             height={200}
-            className="rounded-full size-6"
+            className="rounded-full size-6 max-sm:hidden"
           />
         )}
         <div
@@ -40,22 +40,26 @@ export const Message = ({
             isCurrentUser
               ? "bg-primaryCol msg-radius-user"
               : "bg-secondaryCol msg-radius"
-          } text-bg text-sm px-5 pt-3 pb-2`}
+          } text-bg sm:text-sm text-xs px-5 pt-3 pb-2`}
         >
-          <div>{message}</div>
+          <p>{message}</p>
           <div
-            className={`text-[12px] ${
-              isCurrentUser ? "text-neutral-100" : "text-gray-500"
-            } pointer-events-none select-none flex items-center justify-end gap-x-2`}
+            className={`sm:text-[12px] text-[10px] ${
+              isCurrentUser
+                ? "text-neutral-100 justify-end"
+                : "text-gray-500 justify-start"
+            } pointer-events-none select-none flex items-center  gap-x-2`}
           >
             <p>{sentTime}</p>
             {isCurrentUser && hasDelivered && !hasRead && (
-              <Check className="size-4" />
+              <Check className="sm:size-4 size-3" />
             )}
             {isCurrentUser && hasDelivered && hasRead && (
-              <CheckCheck className="size-4" />
+              <CheckCheck className="sm:size-4 size-3" />
             )}
-            {isCurrentUser && !hasDelivered && <Clock className="size-4" />}
+            {isCurrentUser && !hasDelivered && (
+              <Clock className="sm:size-4 size-3" />
+            )}
           </div>
         </div>
       </div>

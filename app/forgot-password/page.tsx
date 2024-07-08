@@ -42,12 +42,12 @@ const ForgotPasswordpage = () => {
   return (
     <AuthLayout>
       <section className="max-w-lg mx-auto w-full max-xs:px-4 z-10">
-        <h2 className="font-bold text-5xl text-center">Reset Password</h2>
+        <h2 className="font-bold sm:text-5xl text-4xl text-center">Reset Password</h2>
         <p className="text-neutral-400 text-sm font-roboto font-normal text-center mt-5">
           Enter your email address to get instructions to reset your password.
         </p>
         <form
-          className="max-w-md mx-auto bg-white rounded-3xl p-8 z-10 mt-8 flex flex-col gap-y-7"
+          className="max-w-md mx-auto bg-white rounded-3xl sm:p-8 p-2 z-10 mt-8 flex flex-col gap-y-7"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="relative">

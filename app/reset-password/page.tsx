@@ -47,12 +47,12 @@ const ResetPasswordpage = () => {
   return (
     <AuthLayout>
       <section className="max-w-lg mx-auto w-full max-xs:px-4 z-10">
-        <h2 className="font-bold text-4xl text-center">Create New Password</h2>
+        <h2 className="font-bold sm:text-4xl text-3xl text-center">Create New Password</h2>
         <p className="text-neutral-400 text-sm font-roboto font-normal text-center mt-5">
           Enter new password to reset your account password.
         </p>
         <form
-          className="max-w-md mx-auto bg-white rounded-3xl p-8 z-10 mt-8 flex flex-col gap-y-7"
+          className="max-w-md mx-auto bg-white rounded-3xl sm:p-8 p-2 z-10 mt-8 flex flex-col gap-y-7"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="relative w-full mb-1">

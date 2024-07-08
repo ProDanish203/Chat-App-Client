@@ -49,7 +49,7 @@ const SignupPage = () => {
           friends and family.
         </p>
         <form
-          className="max-w-md mx-auto bg-white rounded-3xl p-8 z-10 mt-8 flex flex-col gap-y-7"
+          className="max-w-md mx-auto bg-white rounded-3xl sm:p-8 p-2 z-10 mt-8 flex flex-col gap-y-7"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="relative">

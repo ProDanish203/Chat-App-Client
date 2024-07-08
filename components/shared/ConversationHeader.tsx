@@ -1,6 +1,7 @@
-import { EllipsisVertical, Phone, User } from "lucide-react";
+import { ArrowLeft, Phone, User } from "lucide-react";
 import Image from "next/image";
 import { ConversationOptions } from "./ConversationOptions";
+import Link from "next/link";
 
 interface Props {
   userImage: string;
@@ -15,13 +16,18 @@ export const ConversationHeader = ({
 }: Props) => {
   return (
     <div className="flex items-center justify-between gap-x-3 w-full bg-white py-1 px-5 rounded-2xl shadow-md">
-      <div className="flex items-center gap-x-4 py-3 w-full">
+      <div className="flex items-center sm:gap-x-4 gap-x-2 py-3 w-full">
+        <Link href="/chats" className="lg:hidden">
+          <button className="lg:hidden">
+            <ArrowLeft className="size-5" />
+          </button>
+        </Link>
         <Image
           src={userImage || "/images/dummy-user.webp"}
           alt="user"
           width={200}
           height={200}
-          className="rounded-full size-12"
+          className="rounded-full sm:size-12 size-10"
         />
 
         <div className="flex flex-col w-full">
@@ -38,7 +44,7 @@ export const ConversationHeader = ({
         <button className="group relative lg:h-12 lg:w-24 max-lg:size-10 max-lg:center overflow-hidden overflow-x-hidden bg-transparent px-5 text-text border border-secondaryCol hover:text-textDark rounded-full">
           <span className="max-lg:hidden relative z-10">Profile</span>
           <span className="lg:hidden">
-            <User className="size-5" />
+            <User className="sm:size-5 size-4" />
           </span>
           <span className="absolute inset-0 overflow-hidden rounded-md">
             <span className="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-secondaryCol transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span>
@@ -55,7 +61,7 @@ export const ConversationHeader = ({
             </div>
           </span>
           <span className="lg:hidden">
-            <Phone className="size-5" />
+            <Phone className="sm:size-5 size-4" />
           </span>
         </button>
 

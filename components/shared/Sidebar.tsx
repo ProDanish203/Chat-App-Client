@@ -16,7 +16,7 @@ export const Sidebar = () => {
   const isNotifications = pathname === "/notifications";
 
   return (
-    <aside className="max-md:hidden py-10 flex flex-col justify-between items-center bg-secondaryCol h-[95vh] min-w-[70px] rounded-2xl">
+    <aside className="max-lg:hidden py-10 flex flex-col justify-between items-center bg-secondaryCol h-[95vh] sm:min-w-[70px] min-w-[50px] rounded-2xl">
       <div className="text-textDark">Logo</div>
       <nav className="text-textDark flex flex-col items-center gap-y-10">
         <Tooltip>
@@ -31,7 +31,7 @@ export const Sidebar = () => {
         </Tooltip>
         <Tooltip>
           <TooltipTrigger>
-            <Link href="/" className="">
+            <Link href="/requests" className="">
               <Mail className={`size-5 ${isRequests && "text-primaryCol"}`} />
             </Link>
             <TooltipContent side="right">Requests</TooltipContent>
@@ -39,7 +39,7 @@ export const Sidebar = () => {
         </Tooltip>
         <Tooltip>
           <TooltipTrigger>
-            <Link href="/" className="">
+            <Link href="/notifications" className="">
               <Bell
                 className={`size-5 ${isNotifications && "text-primaryCol"}`}
               />
