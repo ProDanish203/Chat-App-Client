@@ -16,7 +16,7 @@ export const Sidebar = () => {
   const isNotifications = pathname === "/notifications";
 
   return (
-    <aside className="max-md:hidden py-10 flex flex-col justify-between items-center bg-secondaryCol h-[95vh] w-[70px] rounded-2xl">
+    <aside className="max-md:hidden py-10 flex flex-col justify-between items-center bg-secondaryCol h-[95vh] min-w-[70px] rounded-2xl">
       <div className="text-textDark">Logo</div>
       <nav className="text-textDark flex flex-col items-center gap-y-10">
         <Tooltip>

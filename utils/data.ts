@@ -17,7 +17,8 @@ export const Chatdata = [
     unreadMessages: 1,
     userImage: "/images/dummy-user.webp",
     username: "Bob",
-    lastMessage: "Goodbye lorem10kjashd asdhgas ashgd hasgdjhgasjhdg asgdjhasgjhdasgdjas dasjdgas dgas dasjgdj asgjdg asjdgjas gdjasgjdgjas djgasdjgasjhd asgdjhasgd!",
+    lastMessage:
+      "Goodbye lorem10kjashd asdhgas ashgd hasgdjhgasjhdg asgdjhasgjhdasgdjas dasjdgas dgas dasjgdj asgjdg asjdgjas gdjasgjdgjas djgasdjgasjhd asgdjhasgd!",
     lastMessageTime: "2:15 PM",
   },
   {
@@ -196,5 +197,58 @@ export const messagesData = [
     hasRead: true,
     hasDelivered: true,
     userImage: "/images/dummy-user.webp",
+  },
+];
+
+export const requestData = [
+  {
+    username: "Username",
+    image: "/images/dummy-user.webp",
+    isPending: false,
+  },
+  {
+    username: "Sarah",
+    image: "/images/dummy-user.webp",
+    isPending: true,
+  },
+  {
+    username: "Daniel",
+    image: "/images/dummy-user.webp",
+    isPending: false,
+  },
+  {
+    username: "Sophie",
+    image: "/images/dummy-user.webp",
+    isPending: true,
+  },
+  {
+    username: "Matthew",
+    image: "/images/dummy-user.webp",
+    isPending: false,
+  },
+  {
+    username: "Username",
+    image: "/images/dummy-user.webp",
+    isPending: false,
+  },
+  {
+    username: "Sarah",
+    image: "/images/dummy-user.webp",
+    isPending: true,
+  },
+  {
+    username: "Daniel",
+    image: "/images/dummy-user.webp",
+    isPending: false,
+  },
+  {
+    username: "Sophie",
+    image: "/images/dummy-user.webp",
+    isPending: true,
+  },
+  {
+    username: "Matthew",
+    image: "/images/dummy-user.webp",
+    isPending: false,
   },
 ];

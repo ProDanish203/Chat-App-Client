@@ -1,3 +1,4 @@
+import { RequestSlider } from "./RequestSlider";
 import { ConversationOptions } from "./ConversationOptions";
 import { AddFriends } from "./AddFriends";
 import { Message } from "./Message";
@@ -22,4 +23,5 @@ export {
   Conversation,
   Message,
   AddFriends,
+  RequestSlider,
 };
