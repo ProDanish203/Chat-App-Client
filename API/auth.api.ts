@@ -93,3 +93,46 @@ export const logoutUser = async () => {
     };
   }
 };
+
+export const forgotPassword = async ({ email }: { email: string }) => {
+  try {
+    const { data } = await api.post("/auth/forgot-password", {
+      email,
+    });
+
+    return {
+      success: true,
+      response: data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+export const resetPassword = async ({
+  token,
+  password,
+}: {
+  token: string;
+  password: string;
+}) => {
+  try {
+    const { data } = await api.post("/auth/reset-password", {
+      token,
+      password,
+    });
+
+    return {
+      success: true,
+      response: data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};

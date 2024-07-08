@@ -40,10 +40,7 @@ export default function RootLayout({
           <AuthProvider>
             <TooltipProvider delayDuration={200} disableHoverableContent>
               <Toaster position="top-right" />
-              <main className="flex gap-x-3 relative bg-bg md:p-5 min-h-screen">
-                <Sidebar />
-                {children}
-              </main>
+              {children}
             </TooltipProvider>
           </AuthProvider>
         </ReactQueryProvider>
