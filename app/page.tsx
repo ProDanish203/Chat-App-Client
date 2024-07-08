@@ -1,9 +1,13 @@
 import { SendChat } from "@/components/forms";
 import { Chats, ConversationHeader, Conversation } from "@/components/shared";
 import MainLayout from "@/components/layouts/MainLayout";
+import { Button } from "@/components/ui/button";
+import { Arrow } from "@radix-ui/react-dropdown-menu";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
-  const isUserSelected = false;
+  const isUserSelected = true;
 
   return (
     <MainLayout isChat>
@@ -30,9 +34,12 @@ export default function Home() {
               Welcome to our chat app! Start a conversation by selecting a user
               from the list on the left.
             </p>
-            <button>
-              
-            </button>
+            <Link href="/chats">
+              <Button className="bg-primaryCol hover:bg-primaryCol/80 mt-5 text-textDark lg:hidden flex items-center gap-x-2 hover:gap-x-3 transition-all duration-100">
+                Let's Chat
+                <ArrowRight className="size-5" />
+              </Button>
+            </Link>
           </div>
         )}
       </section>

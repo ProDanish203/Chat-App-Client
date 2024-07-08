@@ -1,3 +1,4 @@
+import { ChatUserSkeleton } from "../skeletons";
 import { ChatUser } from "./ChatUser";
 import { Chatdata } from "@/utils/data";
 
@@ -15,6 +16,7 @@ export const ChatSidebar = () => {
             lastMessageTime={chat.lastMessageTime}
             isActive={chat.username === "Alice"}
           />
+          // <ChatUserSkeleton />
         ))
       ) : (
         <div className="h-full flex flex-col items-center justify-center px-5">
@@ -22,8 +24,8 @@ export const ChatSidebar = () => {
             You currently have no friends to chat with
           </h4>
           <p className="text-neutral-400 text-sm text-center px-5 mt-1">
-            Start a conversation by just clicking the &apos;+&apos; button on the header
-            to add new friends{" "}
+            Start a conversation by just clicking the &apos;+&apos; button on
+            the header to add new friends{" "}
           </p>
         </div>
       )}

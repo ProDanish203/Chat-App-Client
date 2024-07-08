@@ -1,5 +1,6 @@
 import { messagesData } from "@/utils/data";
 import { Message } from "./Message";
+import { MessageSkeleton } from "../skeletons";
 
 export const Conversation = () => {
   return (
@@ -7,15 +8,18 @@ export const Conversation = () => {
       <div className="relative flex flex-col gap-y-3 sm:px-5 px-2 pt-10 mb-5 w-full overflow-y-auto h-full">
         {messagesData && messagesData.length > 0 ? (
           messagesData.map((message, index) => (
-            <Message
-              key={index}
-              message={message.message}
-              isCurrentUser={message.isCurrentUser}
-              userImage={message.userImage}
-              sentTime={message.sentTime}
-              hasRead={message.hasRead}
-              hasDelivered={message.hasDelivered}
-            />
+            <>
+              <Message
+                key={index}
+                message={message.message}
+                isCurrentUser={message.isCurrentUser}
+                userImage={message.userImage}
+                sentTime={message.sentTime}
+                hasRead={message.hasRead}
+                hasDelivered={message.hasDelivered}
+              />
+              {/* <MessageSkeleton /> */}
+            </>
           ))
         ) : (
           //  If it's a new chat

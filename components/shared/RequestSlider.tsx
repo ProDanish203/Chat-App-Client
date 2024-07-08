@@ -8,6 +8,7 @@ import { Swiper as SwiperType } from "swiper";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { RequestSkeleton } from "../skeletons";
 
 interface Props {
   title: string;
@@ -123,6 +124,8 @@ export const RequestSlider = ({ title, isPending }: Props) => {
           <ArrowBigRight className="size-5" />
         </button>
       </div>
+
+      {/* <RequestSkeleton /> */}
     </div>
   );
 };

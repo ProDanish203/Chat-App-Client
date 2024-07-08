@@ -17,6 +17,7 @@ const RequestPage = () => {
 
         <RequestSlider title="Incoming Requests" />
         <RequestSlider title="Pending Requests" isPending />
+        
       </section>
     </MainLayout>
   );
