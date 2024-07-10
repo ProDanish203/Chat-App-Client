@@ -20,8 +20,8 @@ export interface UserTypes {
     url: string;
     publicId: string;
   };
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ApiResponse<T> {
