@@ -9,7 +9,7 @@ export default function AuthLayout({
   return (
     <>
       <main className="grid md:grid-cols-2 h-screen w-screen">
-        <div className="bg-gray-200 max-md:hidden h-screen">
+        <div className="bg-gray-200 max-md:hidden min-h-screen">
           <Image
             src="/images/auth-image.jpg"
             alt="Full size image"
@@ -18,7 +18,7 @@ export default function AuthLayout({
             className="w-full h-full object-cover object-center"
           />
         </div>
-        <div className="flex items-center justify-center relative bg-white w-full h-full">
+        <div className="flex items-center justify-center relative bg-white w-full h-full ">
           <div className="absolute md:top-10 md:right-10 top-5 right-5">
             LOGO
           </div>

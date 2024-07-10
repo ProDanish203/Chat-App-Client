@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getAccessToken = () => {
-  return localStorage.getItem("access-token");
+  return localStorage.getItem("token");
 };
 
 const api = axios.create({

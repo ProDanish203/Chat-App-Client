@@ -32,7 +32,8 @@ const LoginPage = () => {
   const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = async (data) => {
     const { response, success } = await mutateAsync(data);
     if (success) {
-      setUser(response.data.user);
+      setUser(response.user);
+      localStorage.setItem("token", response.accessToken);
       toast.success("Login successfull");
       router.push("/");
     } else return toast.error(response as string);

@@ -12,10 +12,26 @@ import { z } from "zod";
 import { FloatingInput, PasswordInput } from "@/components/forms";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { convertImage } from "@/lib/helpers";
+import { useState } from "react";
+import Image from "next/image";
+import { Camera } from "lucide-react";
 
 const SignupPage = () => {
-  const { setUser } = useAuth();
   const router = useRouter();
+
+  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState("");
+
+  const handleFileChange = async (file: any) => {
+    try {
+      setFile(file);
+      const base64Image = await convertImage(file);
+      setImage(base64Image);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const { mutateAsync } = useMutation({
     mutationFn: registerUser,
@@ -32,9 +48,17 @@ const SignupPage = () => {
   const onSubmit: SubmitHandler<z.infer<typeof registerSchema>> = async (
     data
   ) => {
-    const { response, success } = await mutateAsync(data);
+    if (!image || !file) return toast.error("Please select a profile picture");
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("username", data.username);
+    formData.append("fullName", data.fullName);
+    formData.append("password", data.password);
+    formData.append("avatar", file as Blob);
+
+    const { response, success } = await mutateAsync(formData);
+    console.log(response);
     if (success) {
-      setUser(response.data.user);
       toast.success("Registeration successfull");
       router.push("/login");
     } else return toast.error(response as string);
@@ -52,6 +76,30 @@ const SignupPage = () => {
           className="max-w-md mx-auto bg-white rounded-3xl sm:p-8 p-2 z-10 mt-8 flex flex-col gap-y-7"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <div className="relative w-full mx-auto center">
+            <label
+              htmlFor="avatar"
+              className="cursor-pointer relative size-24 shadow-md  bg-hoverCol rounded-full"
+            >
+              <Image
+                src={image || "/images/dummy-user.webp"}
+                alt="avatar"
+                width={100}
+                height={100}
+                className="w-full h-full rounded-full object-cover"
+              />
+              <div className="center size-7 rounded-full bg-white absolute bottom-0 -right-1">
+                <Camera className="size-5" />
+              </div>
+            </label>
+            <input
+              type="file"
+              className="hidden"
+              id="avatar"
+              accept="image/jpeg, image/png"
+              onChange={(e) => handleFileChange(e.target.files?.[0])}
+            />
+          </div>
           <div className="relative">
             <FloatingInput
               placeholder="Email Address"

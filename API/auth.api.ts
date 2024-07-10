@@ -31,23 +31,12 @@ export const loginUser = async ({
   }
 };
 
-export const registerUser = async ({
-  username,
-  password,
-  email,
-  fullName,
-}: {
-  username: string;
-  password: string;
-  email: string;
-  fullName: string;
-}) => {
+export const registerUser = async (formData: FormData) => {
   try {
-    const { data } = await api.post("/auth/register", {
-      username,
-      password,
-      email,
-      fullName,
+    const { data } = await api.post("/auth/register", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
     return {
@@ -64,7 +53,7 @@ export const registerUser = async ({
 
 export const getCurrentUser = async () => {
   try {
-    const { data } = await api.get("/user/current-user");
+    const { data } = await api.get("/auth/current-user");
 
     return {
       success: true,
@@ -80,7 +69,11 @@ export const getCurrentUser = async () => {
 
 export const logoutUser = async () => {
   try {
-    const { data } = await api.post("/auth/logout");
+    const { data } = await api.post(
+      "/auth/logout",
+      {},
+      { withCredentials: true }
+    );
 
     return {
       success: true,

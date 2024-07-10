@@ -1,5 +1,6 @@
 "use client";
 
+import { UserTypes } from "@/types/types";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface AuthContextValue {
@@ -14,7 +15,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<UserTypes | null>(null);
 
   const value: AuthContextValue = {
     user,
