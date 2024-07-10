@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChatUserSkeleton } from "../skeletons";
 import { ChatUser } from "./ChatUser";
-import { Chatdata } from "@/utils/data";
 import { getMyFriends } from "@/API/chats.api";
-import { ApiResponse, ChatUserType } from "@/types/types";
+import { ChatUserType } from "@/types/types";
+import useChatStore, { getStateValues } from "@/store/chat.store";
 
 export const ChatSidebar = () => {
   const { page, search, limit } = { page: 1, search: "", limit: 15 };
@@ -30,8 +30,7 @@ export const ChatSidebar = () => {
         data.response.data.map((chat: ChatUserType, idx: number) => (
           <ChatUser
             key={chat._id}
-            username={chat.friendDetails.fullName}
-            userImage={chat.friendDetails.avatar.url}
+            user={chat.friendDetails}
             unreadMessages={1}
             lastMessage={""}
             lastMessageTime={""}

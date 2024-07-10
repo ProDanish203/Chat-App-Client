@@ -43,3 +43,19 @@ export interface ChatUserType {
     };
   };
 }
+
+interface Chat {
+  userId: string;
+  username: string;
+  fullName: string;
+  avatar: {
+    url: string;
+    publicId: string;
+  };
+  chatId?: string;
+  messages?: string[];
+}
+
+export type UseChatStore = Chat & {
+  setValues: (values: Partial<Chat>) => void;
+};

@@ -2,6 +2,7 @@ import { ArrowLeft, Phone, User } from "lucide-react";
 import Image from "next/image";
 import { ConversationOptions } from "./ConversationOptions";
 import Link from "next/link";
+import useChatStore, { getStateValues } from "@/store/chat.store";
 
 interface Props {
   userImage: string;
@@ -14,24 +15,30 @@ export const ConversationHeader = ({
   userImage,
   isOnline,
 }: Props) => {
+  const chatData = useChatStore((state) => state);
+  const setValues = useChatStore((state) => state.setValues);
+
+  const handleBackButton = () => {
+    setValues(getStateValues(useChatStore.getInitialState()));
+  };
+
   return (
     <div className="flex items-center justify-between gap-x-3 w-full bg-white py-1 px-5 rounded-2xl shadow-md">
       <div className="flex items-center sm:gap-x-4 gap-x-2 py-3 w-full">
-        <Link href="/chats" className="lg:hidden">
-          <button className="lg:hidden">
-            <ArrowLeft className="size-5" />
-          </button>
-        </Link>
+        <button onClick={handleBackButton} className="md:hidden">
+          <ArrowLeft className="size-5" />
+        </button>
+
         <Image
-          src={userImage || "/images/dummy-user.webp"}
-          alt="user"
+          src={chatData.avatar.publicId || "/images/dummy-user.webp"}
+          alt={chatData.username}
           width={200}
           height={200}
           className="rounded-full sm:size-12 size-10"
         />
 
         <div className="flex flex-col w-full">
-          <h4 className="font-semibold text-text">{username}</h4>
+          <h4 className="font-semibold text-text">{chatData.fullName}</h4>
           <p className="flex items-center gap-x-1 relative text-xs text-neutral-400 truncate font-roboto">
             {isOnline && (
               <span className="size-2 bg-green-500 rounded-full block"></span>

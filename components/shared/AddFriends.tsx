@@ -38,7 +38,7 @@ const FriendCard = ({
     mutationFn: sendRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["chat-users"],
+        queryKey: ["pending-requests"],
       });
     },
   });
@@ -138,8 +138,9 @@ export const AddFriends = () => {
 
         <div className="flex flex-col gap-y-3 max-h-[400px] overflow-y-auto">
           {results.length > 0 &&
-            results.map((user: UserTypes, idx: number) => (
+            results.map((user: UserTypes) => (
               <FriendCard
+                key={user._id}
                 avatar={user.avatar.url}
                 fullName={user.fullName}
                 username={user.username}

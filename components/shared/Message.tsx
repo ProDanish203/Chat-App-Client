@@ -32,7 +32,7 @@ export const Message = ({
             alt="user-image"
             width={200}
             height={200}
-            className="rounded-full size-6 max-sm:hidden"
+            className="rounded-full size-6 max-lg:hidden"
           />
         )}
         <div

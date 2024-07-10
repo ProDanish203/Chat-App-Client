@@ -11,7 +11,7 @@ export const BottomBar = () => {
   const isNotifications = pathname === "/notifications";
 
   return (
-    <nav className="lg:hidden bg-secondaryCol text-textDark fixed bottom-0 left-0 flex items-center justify-between py-4 sm:px-16 px-5 w-full rounded-tr-2xl rounded-tl-2xl">
+    <nav className="md:hidden bg-secondaryCol text-textDark fixed bottom-0 left-0 flex items-center justify-between py-4 sm:px-16 px-5 w-full rounded-tr-2xl rounded-tl-2xl">
       <Link href="/chats" className="">
         <MessageCircleMore
           className={`size-5 ${isMessages && "text-primaryCol"}`}

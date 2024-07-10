@@ -1,9 +1,10 @@
+import useChatStore, { getStateValues } from "@/store/chat.store";
+import { UserTypes } from "@/types/types";
 import Image from "next/image";
 
 interface Props {
   unreadMessages: number;
-  userImage: string;
-  username: string;
+  user: UserTypes;
   lastMessage: string;
   lastMessageTime: string;
   isActive?: boolean;
@@ -11,28 +12,39 @@ interface Props {
 
 export const ChatUser = ({
   unreadMessages,
-  userImage,
-  username,
+  user,
   lastMessage,
   lastMessageTime,
   isActive,
 }: Props) => {
+  const setValues = useChatStore((state) => state.setValues);
+
+  const handleChatUserClick = () => {
+    setValues({
+      userId: user._id,
+      username: user.username,
+      fullName: user.fullName,
+      avatar: user.avatar,
+    });
+  };
+
   return (
     <div
+      onClick={handleChatUserClick}
       className={`flex items-center gap-x-4 py-3 px-5 ${
         isActive ? "bg-hoverCol" : "border-b border-b-neutral-200"
       }  w-full cursor-pointer hover:bg-hoverCol transition-all duration-100`}
     >
       <Image
-        src={userImage || "/images/dummy-user.webp"}
-        alt="user"
+        src={user.avatar.url || "/images/dummy-user.webp"}
+        alt={user.username}
         width={200}
         height={200}
         className="rounded-full size-12"
       />
 
       <div className="flex flex-col gap-y-1 w-full">
-        <h4 className="font-semibold text-text">{username}</h4>
+        <h4 className="font-semibold text-text">{user.fullName}</h4>
         {lastMessage && (
           <p className="text-sm text-neutral-400 line-clamp-1 font-roboto">
             {lastMessage}
