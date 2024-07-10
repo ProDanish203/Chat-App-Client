@@ -3,7 +3,6 @@ import { SendChat } from "@/components/forms";
 import { Chats, ConversationHeader, Conversation } from "@/components/shared";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
-import { Arrow } from "@radix-ui/react-dropdown-menu";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import useChatStore from "@/store/chat.store";

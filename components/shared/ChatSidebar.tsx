@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChatUserSkeleton } from "../skeletons";
 import { ChatUser } from "./ChatUser";
-import { getMyFriends } from "@/API/chats.api";
+import { getMyFriends } from "@/API/request.api";
 import { ChatUserType } from "@/types/types";
-import useChatStore, { getStateValues } from "@/store/chat.store";
 
 export const ChatSidebar = () => {
   const { page, search, limit } = { page: 1, search: "", limit: 15 };

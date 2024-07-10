@@ -13,7 +13,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getSearchedUsers, sendRequest } from "@/API/chats.api";
+import { getSearchedUsers, sendRequest } from "@/API/request.api";
 import { toast } from "sonner";
 import { UserTypes } from "@/types/types";
 

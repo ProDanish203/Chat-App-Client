@@ -13,6 +13,8 @@ import { RequestSkeleton } from "../skeletons";
 interface Props {
   title: string;
   isPending?: boolean;
+  isLoading: boolean;
+  data: any;
 }
 
 interface RequestCardProps {
@@ -55,7 +57,7 @@ const RequestCard = ({ username, image, isPending }: RequestCardProps) => {
   );
 };
 
-export const RequestSlider = ({ title, isPending }: Props) => {
+export const RequestSlider = ({ title, isPending, data, isLoading }: Props) => {
   const swiperRef = useRef<SwiperType>();
 
   const sliderOptions = {
@@ -87,20 +89,21 @@ export const RequestSlider = ({ title, isPending }: Props) => {
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}
-        className=""
       >
-        {requestData.length > 0 ? (
-          requestData.map((request, index) => (
+        {isLoading ? (
+          <RequestSkeleton />
+        ) : data && data.data.length > 0 ? (
+          data.data.map((request: any, index: number) => (
             <SwiperSlide key={index} className="">
               {!isPending ? (
                 <RequestCard
-                  username={request.username}
-                  image={request.image}
+                  username={request.sender.fullName}
+                  image={request.sender.avatar.url}
                 />
               ) : (
                 <RequestCard
-                  username={request.username}
-                  image={request.image}
+                  username={request.receiver.fullName}
+                  image={request.receiver.avatar.url}
                   isPending
                 />
               )}
@@ -110,22 +113,22 @@ export const RequestSlider = ({ title, isPending }: Props) => {
           <p></p>
         )}
       </Swiper>
-      <div className="center gap-x-3 mt-5">
-        <button
-          className="size-12 text-primaryCol center bg-white border border-primaryCol hover:bg-primaryCol hover:text-textDark rounded-full transition-all duration-100 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90"
-          onClick={() => swiperRef.current?.slidePrev()}
-        >
-          <ArrowBigLeft className="size-5" />
-        </button>
-        <button
-          className="size-12 text-primaryCol center bg-white border border-primaryCol hover:bg-primaryCol hover:text-textDark rounded-full transition-all duration-100 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90"
-          onClick={() => swiperRef.current?.slideNext()}
-        >
-          <ArrowBigRight className="size-5" />
-        </button>
-      </div>
-
-      {/* <RequestSkeleton /> */}
+      {data && data.data.length > 0 && (
+        <div className="center gap-x-3 mt-5">
+          <button
+            className="size-12 text-primaryCol center bg-white border border-primaryCol hover:bg-primaryCol hover:text-textDark rounded-full transition-all duration-100 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90"
+            onClick={() => swiperRef.current?.slidePrev()}
+          >
+            <ArrowBigLeft className="size-5" />
+          </button>
+          <button
+            className="size-12 text-primaryCol center bg-white border border-primaryCol hover:bg-primaryCol hover:text-textDark rounded-full transition-all duration-100 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:translate-y-1 active:scale-x-110 active:scale-y-90"
+            onClick={() => swiperRef.current?.slideNext()}
+          >
+            <ArrowBigRight className="size-5" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
