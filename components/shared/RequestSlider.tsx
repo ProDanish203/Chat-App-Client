@@ -9,6 +9,9 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { RequestSkeleton } from "../skeletons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { acceptRejectRequest, withdrawRequest } from "@/API/request.api";
+import { toast } from "sonner";
 
 interface Props {
   title: string;
@@ -18,12 +21,52 @@ interface Props {
 }
 
 interface RequestCardProps {
+  id: string;
   username: string;
   image: string;
   isPending?: boolean;
 }
 
-const RequestCard = ({ username, image, isPending }: RequestCardProps) => {
+const RequestCard = ({ username, image, isPending, id }: RequestCardProps) => {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: mutateWithdraw, isPending: isWithdrawing } = useMutation(
+    {
+      mutationFn: withdrawRequest,
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["pending-requests", "chat-users"],
+        });
+      },
+    }
+  );
+
+  const { mutateAsync, isPending: isResponding } = useMutation({
+    mutationFn: acceptRejectRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["pending-requests", "chat-users"],
+      });
+    },
+  });
+
+  const handleWithdraw = async () => {
+    const { response, success } = await mutateWithdraw(id);
+    if (success) {
+      toast.success("Request withdrawn successfully!");
+    } else return toast.error(response as string);
+  };
+
+  const handleRequestResponse = async (status: string) => {
+    const { response, success } = await mutateAsync({
+      id,
+      status,
+    });
+    if (success) {
+      toast.success(`Request ${status}!`);
+    } else return toast.error(response as string);
+  };
+
   return (
     <div className="w-[300px] py-3 px-3 rounded-lg bg-neutral-100">
       <div className="flex items-center gap-x-3 mb-5">
@@ -40,15 +83,27 @@ const RequestCard = ({ username, image, isPending }: RequestCardProps) => {
       <div className="flex items-center justify-between w-ful gap-x-2">
         {!isPending ? (
           <>
-            <Button className="w-full bg-primaryCol hover:bg-primaryCol/80 active:scale-95 transition-all duration-100">
+            <Button
+              disabled={isResponding}
+              onClick={() => handleRequestResponse("approved")}
+              className="w-full bg-primaryCol hover:bg-primaryCol/80 active:scale-95 transition-all duration-100"
+            >
               Accept
             </Button>
-            <Button className="w-full bg-secondaryCol hover:bg-secondaryCol/80 active:scale-95 transition-all duration-100">
+            <Button
+              disabled={isResponding}
+              onClick={() => handleRequestResponse("rejected")}
+              className="w-full bg-secondaryCol hover:bg-secondaryCol/80 active:scale-95 transition-all duration-100"
+            >
               Reject
             </Button>
           </>
         ) : (
-          <Button className="w-full bg-secondaryCol hover:bg-secondaryCol/80 active:scale-95 transition-all duration-100">
+          <Button
+            disabled={isWithdrawing}
+            onClick={handleWithdraw}
+            className="w-full bg-secondaryCol hover:bg-secondaryCol/80 active:scale-95 transition-all duration-100"
+          >
             Withdraw Request
           </Button>
         )}
@@ -97,11 +152,13 @@ export const RequestSlider = ({ title, isPending, data, isLoading }: Props) => {
             <SwiperSlide key={index} className="">
               {!isPending ? (
                 <RequestCard
+                  id={request._id}
                   username={request.sender.fullName}
                   image={request.sender.avatar.url}
                 />
               ) : (
                 <RequestCard
+                  id={request._id}
                   username={request.receiver.fullName}
                   image={request.receiver.avatar.url}
                   isPending
