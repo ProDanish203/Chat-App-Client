@@ -2,7 +2,6 @@
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { requestData } from "@/utils/data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
 import { Navigation } from "swiper/modules";

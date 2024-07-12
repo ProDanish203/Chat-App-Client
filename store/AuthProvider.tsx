@@ -1,5 +1,4 @@
 "use client";
-
 import { UserTypes } from "@/types/types";
 import { createContext, ReactNode, useContext, useState } from "react";
 

@@ -1,3 +1,4 @@
+import { create } from "zustand";
 import { ChatUser } from "./../components/shared/ChatUser";
 
 export interface PaginationTypes {
@@ -18,7 +19,7 @@ export interface UserTypes {
   email: string;
   avatar: {
     url: string;
-    publicId: string;
+    public_id: string;
   };
   createdAt?: string;
   updatedAt?: string;
@@ -29,19 +30,21 @@ export interface ApiResponse<T> {
   pagination: PaginationTypes;
 }
 
+export interface ChatUser {
+  _id: string;
+  username: string;
+  fullName: string;
+  avatar: {
+    url: string;
+    public_id: string;
+  };
+}
+
 export interface ChatUserType {
   _id: string;
-  status: string;
-  friendDetails: {
-    _id: string;
-    username: string;
-    fullName: string;
-    email: string;
-    avatar: {
-      url: string;
-      publicId: string;
-    };
-  };
+  createdAt: string;
+  isGroupChat: boolean;
+  participants: ChatUser[];
 }
 
 interface Chat {
@@ -50,10 +53,9 @@ interface Chat {
   fullName: string;
   avatar: {
     url: string;
-    publicId: string;
+    public_id: string;
   };
   chatId?: string;
-  messages?: string[];
 }
 
 export type UseChatStore = Chat & {

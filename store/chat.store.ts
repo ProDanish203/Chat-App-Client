@@ -4,14 +4,13 @@ import { create } from "zustand";
 type StateValues = Omit<UseChatStore, "setValues">;
 
 const useChatStore = create<UseChatStore>((set) => ({
-  messages: [],
   chatId: "",
   userId: "",
   username: "",
   fullName: "",
   avatar: {
     url: "",
-    publicId: "",
+    public_id: "",
   },
   setValues: (values: Partial<UseChatStore | null>) =>
     set((state) => ({ ...state, ...values })),

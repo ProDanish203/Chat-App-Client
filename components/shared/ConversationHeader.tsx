@@ -3,20 +3,14 @@ import Image from "next/image";
 import { ConversationOptions } from "./ConversationOptions";
 import Link from "next/link";
 import useChatStore, { getStateValues } from "@/store/chat.store";
+import { useSocket } from "@/store/SocketProvider";
 
-interface Props {
-  userImage: string;
-  username: string;
-  isOnline: boolean;
-}
-
-export const ConversationHeader = ({
-  username,
-  userImage,
-  isOnline,
-}: Props) => {
+export const ConversationHeader = () => {
   const chatData = useChatStore((state) => state);
   const setValues = useChatStore((state) => state.setValues);
+
+  const { onlineUsers } = useSocket();
+  const isOnline = onlineUsers.includes(chatData.userId);
 
   const handleBackButton = () => {
     setValues(getStateValues(useChatStore.getInitialState()));
@@ -30,7 +24,7 @@ export const ConversationHeader = ({
         </button>
 
         <Image
-          src={chatData.avatar.publicId || "/images/dummy-user.webp"}
+          src={chatData.avatar.url || "/images/dummy-user.webp"}
           alt={chatData.username}
           width={200}
           height={200}

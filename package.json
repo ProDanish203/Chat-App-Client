@@ -25,6 +25,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
+    "socket.io-client": "^4.7.5",
     "sonner": "^1.4.41",
     "swiper": "^11.1.4",
     "tailwind-merge": "^2.3.0",

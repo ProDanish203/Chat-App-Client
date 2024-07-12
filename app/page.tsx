@@ -27,11 +27,7 @@ export default function Home() {
         </div>
         {chatData && chatData.userId ? (
           <div className="relative w-full">
-            <ConversationHeader
-              isOnline={true}
-              username="Danish"
-              userImage=""
-            />
+            <ConversationHeader />
             <Conversation />
             <SendChat />
           </div>
@@ -45,12 +41,6 @@ export default function Home() {
                 Welcome to our chat app! Start a conversation by selecting a
                 user from the list on the left.
               </p>
-              <Link href="/chats">
-                <Button className="bg-primaryCol hover:bg-primaryCol/80 mt-5 text-textDark lg:hidden flex items-center gap-x-2 hover:gap-x-3 transition-all duration-100">
-                  Let&apos;s Chat
-                  <ArrowRight className="size-5" />
-                </Button>
-              </Link>
             </div>
           )
         )}

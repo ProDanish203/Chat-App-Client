@@ -1,10 +1,5 @@
-"use client";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { SearchBar } from "../helpers";
 import { AddFriends } from "./AddFriends";
-import { FormEvent, useState } from "react";
-import { getSearchedUsers } from "@/API/chats.api";
-import { toast } from "sonner";
 
 export const ChatHeader = () => {
   return (

@@ -1,16 +1,18 @@
 import useChatStore, { getStateValues } from "@/store/chat.store";
-import { UserTypes } from "@/types/types";
+import { ChatUser as ChatUserType } from "@/types/types";
 import Image from "next/image";
 
 interface Props {
+  chatId: string;
   unreadMessages: number;
-  user: UserTypes;
+  user: ChatUserType;
   lastMessage: string;
   lastMessageTime: string;
   isActive?: boolean;
 }
 
 export const ChatUser = ({
+  chatId,
   unreadMessages,
   user,
   lastMessage,
@@ -21,6 +23,7 @@ export const ChatUser = ({
 
   const handleChatUserClick = () => {
     setValues({
+      chatId: chatId,
       userId: user._id,
       username: user.username,
       fullName: user.fullName,

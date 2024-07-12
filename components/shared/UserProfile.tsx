@@ -30,8 +30,13 @@ export const UserProfile = () => {
   });
 
   useEffect(() => {
-    if (!isLoading && data && data.success && data.response)
+    if (!isLoading && data && data.success && data.response) {
       setUser(data.response);
+    }
+    // else if (!isLoading && data && !data.success) {
+    //   typeof window !== undefined && localStorage.removeItem("token");
+    //   router.push("/login");
+    // }
   }, [data]);
 
   const { mutateAsync, isPending } = useMutation({
