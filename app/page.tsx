@@ -2,15 +2,39 @@
 import { SendChat } from "@/components/forms";
 import { Chats, ConversationHeader, Conversation } from "@/components/shared";
 import MainLayout from "@/components/layouts/MainLayout";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import useChatStore from "@/store/chat.store";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useAuth } from "@/store/AuthProvider";
+import { getMessages } from "@/API/chats.api";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { MessageType } from "@/types/types";
 
 export default function Home() {
   const chatData = useChatStore((state) => state);
+  const setValues = useChatStore((state) => state.setValues);
+
   const isMobile = useMediaQuery("(max-width: 767px)");
+
+  const [messages, setMessages] = useState<MessageType[]>([]);
+
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: [],
+    queryFn: () => getMessages(chatData.chatId),
+    enabled: !!chatData.chatId,
+  });
+
+  useEffect(() => {
+    setMessages([]);
+    if (chatData.chatId) refetch();
+  }, [chatData.chatId]);
+
+  useEffect(() => {
+    if (!isLoading && data?.success) {
+      setMessages(data.response.data);
+    }
+  }, [data, isLoading, setValues, chatData.chatId]);
+
   return (
     <MainLayout isChat>
       <section className="w-full flex gap-x-3 relative">
@@ -28,8 +52,8 @@ export default function Home() {
         {chatData && chatData.userId ? (
           <div className="relative w-full">
             <ConversationHeader />
-            <Conversation />
-            <SendChat />
+            <Conversation messages={messages} isLoading={isLoading} />
+            <SendChat setMessages={setMessages} />
           </div>
         ) : (
           !isMobile && (

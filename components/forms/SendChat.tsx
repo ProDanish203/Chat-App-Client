@@ -2,15 +2,15 @@
 import { convertImage } from "@/lib/helpers";
 import { Mic, Paperclip, Send, Smile, X } from "lucide-react";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import useOutsideClick from "@/hooks/useOutsideClick";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { sendChat } from "@/API/chats.api";
 import { toast } from "sonner";
 import useChatStore from "@/store/chat.store";
 import { useSocket } from "@/store/SocketProvider";
-import { Chat } from "@/types/types";
+import { MessageType } from "@/types/types";
 
 interface DisplayFileProps {
   image: string;
@@ -45,15 +45,14 @@ const DisplayFile = ({ image, setFile, setImage }: DisplayFileProps) => {
   );
 };
 
-export const SendChat = () => {
-  // Remove it later
-  const queryClient = useQueryClient();
-
-  const { chatId, messages } = useChatStore((state) => ({
+export const SendChat = ({
+  setMessages,
+}: {
+  setMessages: Dispatch<React.SetStateAction<MessageType[]>>;
+}) => {
+  const { chatId } = useChatStore((state) => ({
     chatId: state.chatId,
-    messages: state.messages,
   }));
-  const setValues = useChatStore((state) => state.setValues);
 
   const { socket } = useSocket();
 
@@ -87,9 +86,7 @@ export const SendChat = () => {
     if (socket) {
       socket.on("newMessage", (newMessage: any) => {
         if (chatId === newMessage.chatId) {
-          setValues({
-            messages: newMessage,
-          });
+          setMessages((prev: MessageType[]) => [...prev, newMessage]);
         }
       });
 

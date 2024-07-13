@@ -73,7 +73,6 @@ interface Chat {
   };
   chatId: string;
   lastMessage?: string;
-  messages: MessageType[];
 }
 
 export type UseChatStore = Chat & {
