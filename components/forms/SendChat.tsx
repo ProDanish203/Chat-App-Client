@@ -2,7 +2,14 @@
 import { convertImage } from "@/lib/helpers";
 import { Mic, Paperclip, Send, Smile, X } from "lucide-react";
 import Image from "next/image";
-import { ChangeEvent, Dispatch, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import EmojiPicker from "emoji-picker-react";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { useMutation } from "@tanstack/react-query";
@@ -47,11 +54,14 @@ const DisplayFile = ({ image, setFile, setImage }: DisplayFileProps) => {
 
 export const SendChat = ({
   setMessages,
+  setTypingUsers,
 }: {
   setMessages: Dispatch<React.SetStateAction<MessageType[]>>;
+  setTypingUsers: Dispatch<React.SetStateAction<{ [key: string]: boolean }[]>>;
 }) => {
-  const { chatId } = useChatStore((state) => ({
+  const { chatId, userId } = useChatStore((state) => ({
     chatId: state.chatId,
+    userId: state.userId,
   }));
 
   const { socket } = useSocket();
@@ -98,6 +108,7 @@ export const SendChat = ({
   }, [socket, chatId]);
 
   const handleSubmit = async () => {
+    if (!message) return;
     if (!chatId) return toast.error("No chat selected");
     const { response, success } = await mutateAsync({
       chatId,
@@ -106,6 +117,40 @@ export const SendChat = ({
     if (success) {
       setMessage("");
     } else return toast.error(response as string);
+  };
+
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handling typing event
+  socket &&
+    socket.on("typing", ({ chatId, userId }) => {
+      if (chatId === chatId) {
+        setTypingUsers((prev: any) => {
+          return { ...prev, [userId]: true };
+        });
+      }
+    });
+
+  socket &&
+    socket.on("typingStopped", ({ chatId, userId }) => {
+      if (chatId === chatId) {
+        setTypingUsers((prev: any) => {
+          return { ...prev, [userId]: false };
+        });
+      }
+    });
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSubmit();
+    else if (socket) {
+      socket.emit("startTyping", { participants: [userId], chatId });
+
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+
+      typingTimeoutRef.current = setTimeout(() => {
+        socket.emit("stopTyping", { participants: [userId], chatId });
+      }, 1000);
+    }
   };
 
   return (
@@ -118,6 +163,9 @@ export const SendChat = ({
               <Smile className="size-5 cursor-pointer" />
             </button>
             <EmojiPicker
+              autoFocusSearch={false}
+              height={400}
+              width={350}
               onEmojiClick={(emoji) => setMessage((prev) => prev + emoji.emoji)}
               open={showEmojis}
               className="!absolute bottom-10 left-0"
@@ -144,6 +192,7 @@ export const SendChat = ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setMessage(e.target.value)
             }
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="sm:hidden relative flex items-center gap-x-2">
@@ -166,9 +215,7 @@ export const SendChat = ({
         <button
           type="button"
           className="center w-full h-full bg-white py-3 px-5 rounded-2xl shadow-md cursor-pointer text-text
-        
-        relative z-0 after:absolute after:left-0 after:top-0 after:-z-10 after:h-full after:w-full after:rounded-full after:bg-white hover:after:bg-gray-300 hover:after:scale-x-125 hover:after:scale-y-150 hover:after:opacity-0 hover:after:transition hover:after:duration-500
-        "
+          relative z-0 after:absolute after:left-0 after:top-0 after:-z-10 after:h-full after:w-full after:rounded-full after:bg-white hover:after:bg-gray-300 hover:after:scale-x-125 hover:after:scale-y-150 hover:after:opacity-0 hover:after:transition hover:after:duration-500"
         >
           <Mic />
         </button>

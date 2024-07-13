@@ -9,9 +9,11 @@ import { useAuth } from "@/store/AuthProvider";
 export const Conversation = ({
   messages,
   isLoading,
+  typingUsers,
 }: {
   messages: MessageType[];
   isLoading: Boolean;
+  typingUsers: { [key: string]: boolean }[];
 }) => {
   const chatData = useChatStore((state) => state);
   const { user } = useAuth();

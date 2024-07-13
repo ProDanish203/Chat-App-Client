@@ -35,6 +35,10 @@ export default function Home() {
     }
   }, [data, isLoading, setValues, chatData.chatId]);
 
+  const [typingUsers, setTypingUsers] = useState<{ [key: string]: boolean }[]>(
+    []
+  );
+
   return (
     <MainLayout isChat>
       <section className="w-full flex gap-x-3 relative">
@@ -52,8 +56,11 @@ export default function Home() {
         {chatData && chatData.userId ? (
           <div className="relative w-full">
             <ConversationHeader />
-            <Conversation messages={messages} isLoading={isLoading} />
-            <SendChat setMessages={setMessages} />
+            <Conversation typingUsers={typingUsers} messages={messages} isLoading={isLoading} />
+            <SendChat
+              setMessages={setMessages}
+              setTypingUsers={setTypingUsers}
+            />
           </div>
         ) : (
           !isMobile && (
