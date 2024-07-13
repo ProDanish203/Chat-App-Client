@@ -17,6 +17,7 @@ import { Skeleton } from "../ui/skeleton";
 import { UserTypes } from "@/types/types";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import useChatStore, { getStateValues } from "@/store/chat.store";
 
 export const UserProfile = () => {
   const router = useRouter();
@@ -43,10 +44,12 @@ export const UserProfile = () => {
     mutationFn: logoutUser,
   });
 
+  const setValues = useChatStore((state) => state.setValues);
+
   const handleLogout = async () => {
     const { success, response } = await mutateAsync();
     if (!success) return toast.error(response);
-
+    setValues(getStateValues(useChatStore.getInitialState()));
     setUser(undefined);
     toast.success("Logged out successfully");
     localStorage.removeItem("token");
@@ -70,7 +73,7 @@ export const UserProfile = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="start" className="sm:w-60 w-40">
         <DropdownMenuLabel className="max-sm:text-xs">
-          My Account
+          {user?.fullName}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="max-sm:text-xs flex items-center gap-x-2 sm:py-3 py-2 cursor-pointer">

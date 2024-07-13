@@ -12,8 +12,25 @@ const useChatStore = create<UseChatStore>((set) => ({
     url: "",
     public_id: "",
   },
+  lastMessage: "",
+  messages: [],
   setValues: (values: Partial<UseChatStore | null>) =>
-    set((state) => ({ ...state, ...values })),
+    // @ts-ignore
+    set((state) => {
+      if (values && values.messages) {
+        // If it's an array, concat it; if it's a single message, append it
+        const newMessages = Array.isArray(values.messages)
+          ? [...state.messages, ...values.messages]
+          : [...state.messages, values.messages];
+
+        return {
+          ...state,
+          ...values,
+          messages: newMessages,
+        };
+      }
+      return { ...state, ...values };
+    }),
 }));
 
 export const getStateValues = (state: UseChatStore): StateValues => {

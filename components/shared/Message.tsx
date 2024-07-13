@@ -1,6 +1,6 @@
 import { Check, CheckCheck, Clock } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import { format, formatDistanceToNowStrict } from "date-fns";
 
 interface MessageProps {
   message: string;
@@ -19,6 +19,10 @@ export const Message = ({
   sentTime,
   userImage,
 }: MessageProps) => {
+  // Format the date in 12 hour format
+  // const formattedDate = format(new Date(sentTime), "hh:mm a");
+  // const smallDate = formatDistanceToNowStrict(new Date(sentTime));
+
   return (
     <div
       className={`flex w-full ${
@@ -40,17 +44,17 @@ export const Message = ({
             isCurrentUser
               ? "bg-primaryCol msg-radius-user"
               : "bg-secondaryCol msg-radius"
-          } text-bg sm:text-sm text-xs px-5 pt-3 pb-2`}
+          } text-bg sm:text-md text-sm px-5 pt-3 pb-2`}
         >
           <p>{message}</p>
           <div
-            className={`sm:text-[12px] text-[10px] ${
+            className={`sm:text-[10px] text-[10px] ${
               isCurrentUser
                 ? "text-neutral-100 justify-end"
                 : "text-gray-500 justify-start"
-            } pointer-events-none select-none flex items-center  gap-x-2`}
+            } pointer-events-none select-none flex items-center gap-x-2`}
           >
-            <p>{sentTime}</p>
+            {/* <p>{formattedDate}</p> */}
             {isCurrentUser && hasDelivered && !hasRead && (
               <Check className="sm:size-4 size-3" />
             )}

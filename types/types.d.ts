@@ -45,6 +45,22 @@ export interface ChatUserType {
   createdAt: string;
   isGroupChat: boolean;
   participants: ChatUser[];
+  lastMessage?: {
+    _id: string;
+    message: string;
+    createdAt: string;
+  };
+}
+
+export interface MessageType {
+  _id: string;
+  chatId: string;
+  sender: string;
+  message: string;
+  attachments?: string[];
+  readBy?: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Chat {
@@ -55,7 +71,9 @@ interface Chat {
     url: string;
     public_id: string;
   };
-  chatId?: string;
+  chatId: string;
+  lastMessage?: string;
+  messages: MessageType[];
 }
 
 export type UseChatStore = Chat & {

@@ -1,5 +1,6 @@
 import useChatStore, { getStateValues } from "@/store/chat.store";
 import { ChatUser as ChatUserType } from "@/types/types";
+import { format } from "date-fns";
 import Image from "next/image";
 
 interface Props {
@@ -19,6 +20,10 @@ export const ChatUser = ({
   lastMessageTime,
   isActive,
 }: Props) => {
+  const formattedDate = lastMessageTime
+    ? format(new Date(lastMessageTime), "hh:mm a")
+    : "";
+
   const setValues = useChatStore((state) => state.setValues);
 
   const handleChatUserClick = () => {
@@ -28,6 +33,7 @@ export const ChatUser = ({
       username: user.username,
       fullName: user.fullName,
       avatar: user.avatar,
+      messages: [],
     });
   };
 
@@ -56,9 +62,7 @@ export const ChatUser = ({
       </div>
 
       <div className="flex flex-col self-start gap-y-2 items-end text-right w-full">
-        <p className="font-normal text-neutral-400 text-xs">
-          {lastMessageTime}
-        </p>
+        <p className="font-normal text-neutral-400 text-xs">{formattedDate}</p>
         {/* Unread Messages */}
         {unreadMessages > 0 && (
           <p className="text-xs font-roboto center bg-primaryCol text-textDark rounded-full size-4">

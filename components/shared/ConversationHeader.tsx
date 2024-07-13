@@ -1,7 +1,6 @@
 import { ArrowLeft, Phone, User } from "lucide-react";
 import Image from "next/image";
 import { ConversationOptions } from "./ConversationOptions";
-import Link from "next/link";
 import useChatStore, { getStateValues } from "@/store/chat.store";
 import { useSocket } from "@/store/SocketProvider";
 
@@ -45,7 +44,7 @@ export const ConversationHeader = () => {
         <button className="group relative lg:h-12 lg:w-24 max-lg:size-10 max-lg:center overflow-hidden overflow-x-hidden bg-transparent px-5 text-text border border-secondaryCol hover:text-textDark rounded-full">
           <span className="max-lg:hidden relative z-10">Profile</span>
           <span className="lg:hidden">
-            <User className="sm:size-5 size-4" />
+            <User className="sm:size-5 relative z-10 size-4" />
           </span>
           <span className="absolute inset-0 overflow-hidden rounded-md">
             <span className="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-secondaryCol transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span>

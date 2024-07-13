@@ -2,9 +2,15 @@
 import { convertImage } from "@/lib/helpers";
 import { Mic, Paperclip, Send, Smile, X } from "lucide-react";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import useOutsideClick from "@/hooks/useOutsideClick";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { sendChat } from "@/API/chats.api";
+import { toast } from "sonner";
+import useChatStore from "@/store/chat.store";
+import { useSocket } from "@/store/SocketProvider";
+import { Chat } from "@/types/types";
 
 interface DisplayFileProps {
   image: string;
@@ -40,6 +46,17 @@ const DisplayFile = ({ image, setFile, setImage }: DisplayFileProps) => {
 };
 
 export const SendChat = () => {
+  // Remove it later
+  const queryClient = useQueryClient();
+
+  const { chatId, messages } = useChatStore((state) => ({
+    chatId: state.chatId,
+    messages: state.messages,
+  }));
+  const setValues = useChatStore((state) => state.setValues);
+
+  const { socket } = useSocket();
+
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState("");
 
@@ -61,6 +78,38 @@ export const SendChat = () => {
   useOutsideClick(emojiRef, () => {
     setShowEmojis(false);
   });
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: sendChat,
+  });
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("newMessage", (newMessage: any) => {
+        if (chatId === newMessage.chatId) {
+          setValues({
+            messages: newMessage,
+          });
+        }
+      });
+
+      // Cleanup function
+      return () => {
+        socket.off("newMessage");
+      };
+    }
+  }, [socket, chatId]);
+
+  const handleSubmit = async () => {
+    if (!chatId) return toast.error("No chat selected");
+    const { response, success } = await mutateAsync({
+      chatId,
+      message,
+    });
+    if (success) {
+      setMessage("");
+    } else return toast.error(response as string);
+  };
 
   return (
     <div className="relative mt-3 flex items-center gap-x-2 h-[8vh] min-h-[8vh]">
@@ -128,7 +177,9 @@ export const SendChat = () => {
         </button>
         <button
           type="submit"
-          className="center w-full h-full bg-primaryCol text-textDark py-3 px-5 rounded-2xl shadow-md cursor-pointer"
+          onClick={handleSubmit}
+          disabled={isPending}
+          className="disabled:opacity-80 disabled:cursor-not-allowed center w-full h-full bg-primaryCol text-textDark py-3 px-5 rounded-2xl shadow-md cursor-pointer"
         >
           <Send />
         </button>

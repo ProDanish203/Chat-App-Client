@@ -29,8 +29,8 @@ export const ChatSidebar = () => {
             chatId={chat._id}
             user={chat.participants[0]}
             unreadMessages={1}
-            lastMessage={""}
-            lastMessageTime={""}
+            lastMessage={chat.lastMessage?.message || ""}
+            lastMessageTime={chat.lastMessage?.createdAt || ""}
             isActive={chat._id === chatData.chatId}
           />
         ))
