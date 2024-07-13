@@ -48,6 +48,7 @@ export interface ChatUserType {
   lastMessage?: {
     _id: string;
     message: string;
+    readBy: string[];
     createdAt: string;
   };
 }
@@ -58,7 +59,7 @@ export interface MessageType {
   sender: string;
   message: string;
   attachments?: string[];
-  readBy?: string[];
+  readBy: string[];
   createdAt: string;
   updatedAt: string;
 }

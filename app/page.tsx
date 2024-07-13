@@ -35,8 +35,8 @@ export default function Home() {
     }
   }, [data, isLoading, setValues, chatData.chatId]);
 
-  const [typingUsers, setTypingUsers] = useState<{ [key: string]: boolean }[]>(
-    []
+  const [typingUsers, setTypingUsers] = useState<{ [key: string]: boolean }>(
+    {}
   );
 
   return (
@@ -51,12 +51,17 @@ export default function Home() {
               : "hidden"
           } `}
         >
-          <Chats />
+          <Chats typingUsers={typingUsers} />
         </div>
         {chatData && chatData.userId ? (
           <div className="relative w-full">
             <ConversationHeader />
-            <Conversation typingUsers={typingUsers} messages={messages} isLoading={isLoading} />
+            <Conversation
+              typingUsers={typingUsers}
+              setMessages={setMessages}
+              messages={messages}
+              isLoading={isLoading}
+            />
             <SendChat
               setMessages={setMessages}
               setTypingUsers={setTypingUsers}

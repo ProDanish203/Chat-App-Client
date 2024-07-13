@@ -9,6 +9,7 @@ interface MessageProps {
   sentTime: string;
   hasRead: boolean;
   hasDelivered: boolean;
+  isTyping: boolean;
 }
 
 export const Message = ({
@@ -18,9 +19,10 @@ export const Message = ({
   isCurrentUser,
   sentTime,
   userImage,
+  isTyping,
 }: MessageProps) => {
   // Format the date in 12 hour format
-  // const formattedDate = format(new Date(sentTime), "hh:mm a");
+  const formattedDate = format(new Date(sentTime), "hh:mm a");
   // const smallDate = formatDistanceToNowStrict(new Date(sentTime));
 
   return (
@@ -54,7 +56,7 @@ export const Message = ({
                 : "text-gray-500 justify-start"
             } pointer-events-none select-none flex items-center gap-x-2`}
           >
-            {/* <p>{formattedDate}</p> */}
+            <p>{formattedDate}</p>
             {isCurrentUser && hasDelivered && !hasRead && (
               <Check className="sm:size-4 size-3" />
             )}

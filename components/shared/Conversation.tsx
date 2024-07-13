@@ -2,28 +2,67 @@
 import { Message } from "./Message";
 import { MessageSkeleton } from "../skeletons";
 import useChatStore from "@/store/chat.store";
-import React, { useEffect } from "react";
+import React, { Dispatch, useEffect } from "react";
 import { MessageType } from "@/types/types";
 import { useAuth } from "@/store/AuthProvider";
+import { useSocket } from "@/store/SocketProvider";
 
 export const Conversation = ({
   messages,
   isLoading,
   typingUsers,
+  setMessages,
 }: {
   messages: MessageType[];
   isLoading: Boolean;
-  typingUsers: { [key: string]: boolean }[];
+  typingUsers: { [key: string]: boolean };
+  setMessages: Dispatch<React.SetStateAction<MessageType[]>>;
 }) => {
   const chatData = useChatStore((state) => state);
   const { user } = useAuth();
 
+  const { socket } = useSocket();
+  useEffect(() => {
+    if (socket) {
+      const lastMessageFromOtherUser =
+        messages.length && messages[messages.length - 1].sender !== user?._id;
+
+      if (lastMessageFromOtherUser) {
+        socket.emit("markMessagesAsSeen", {
+          chatId: chatData.chatId,
+          userId: user?._id,
+        });
+      }
+
+      socket.on("messagesSeen", ({ chatId, userId }) => {
+        if (chatId === chatData.chatId && userId === user?._id) {
+          setMessages((prev) =>
+            prev.map((message) => {
+              if (!message.readBy.includes(userId)) {
+                return {
+                  ...message,
+                  readBy: [...message.readBy, userId],
+                };
+              }
+              return message;
+            })
+          );
+        }
+      });
+    }
+  }, [socket, user._id, chatData.chatId, messages]);
+
   const lastMessageRef = React.useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (typingUsers[chatData.userId]) {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({ behavior: "instant" });
     }, 50);
-  }, [messages]);
+  }, [messages, typingUsers]);
+
+  console.log(messages);
 
   return (
     <div className="relative mt-3 overflow-y-auto max-h-[75vh] h-full flex items-end gap-x-3 w-full bg-white py-3 rounded-2xl shadow-md">
@@ -38,8 +77,9 @@ export const Conversation = ({
                 isCurrentUser={message.sender === user?._id}
                 userImage={chatData.avatar.url}
                 sentTime={message.createdAt}
-                hasRead={message.readBy?.length === 2}
-                hasDelivered={message.readBy?.length === 1}
+                isTyping={typingUsers[chatData.userId]}
+                hasRead={message.readBy.includes(chatData.userId)}
+                hasDelivered={true}
               />
             </div>
           ))
@@ -49,6 +89,13 @@ export const Conversation = ({
             <p className="bg-hoverCol rounded-full py-1 px-10 max-w-[70%] w-full text-center text-lg text-secondaryCol/80 font-roboto shadow-sm">
               Start a conversation
             </p>
+          </div>
+        )}
+        {typingUsers[chatData.userId] && (
+          <div className="relative w-28 h-10 bg-neutral-200 rounded-full py-4 center msg-radius">
+            <div className="typing__dot"></div>
+            <div className="typing__dot"></div>
+            <div className="typing__dot"></div>
           </div>
         )}
       </div>

@@ -57,7 +57,7 @@ export const SendChat = ({
   setTypingUsers,
 }: {
   setMessages: Dispatch<React.SetStateAction<MessageType[]>>;
-  setTypingUsers: Dispatch<React.SetStateAction<{ [key: string]: boolean }[]>>;
+  setTypingUsers: Dispatch<React.SetStateAction<{ [key: string]: boolean }>>;
 }) => {
   const { chatId, userId } = useChatStore((state) => ({
     chatId: state.chatId,

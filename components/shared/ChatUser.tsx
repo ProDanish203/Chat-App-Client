@@ -10,6 +10,7 @@ interface Props {
   lastMessage: string;
   lastMessageTime: string;
   isActive?: boolean;
+  isTyping: boolean;
 }
 
 export const ChatUser = ({
@@ -19,6 +20,7 @@ export const ChatUser = ({
   lastMessage,
   lastMessageTime,
   isActive,
+  isTyping,
 }: Props) => {
   const formattedDate = lastMessageTime
     ? format(new Date(lastMessageTime), "hh:mm a")
@@ -33,7 +35,6 @@ export const ChatUser = ({
       username: user.username,
       fullName: user.fullName,
       avatar: user.avatar,
-      messages: [],
     });
   };
 
@@ -53,11 +54,23 @@ export const ChatUser = ({
       />
 
       <div className="flex flex-col gap-y-1 w-full">
-        <h4 className="font-semibold text-text">{user.fullName}</h4>
-        {lastMessage && (
-          <p className="text-sm text-neutral-400 line-clamp-1 font-roboto">
-            {lastMessage}
+        <h4 className="font-semibold text-text truncate">
+          {user.fullName.length > 20
+            ? user.fullName.slice(0, 20) + "..."
+            : user.fullName}
+        </h4>
+        {isTyping ? (
+          <p className="text-sm text-primaryCol line-clamp-1 font-medium font-roboto">
+            Typing...
           </p>
+        ) : (
+          lastMessage && (
+            <p className="text-sm text-neutral-400 line-clamp-1 font-roboto">
+              {lastMessage.length > 30
+                ? lastMessage.slice(0, 30) + "..."
+                : lastMessage}
+            </p>
+          )
         )}
       </div>
 

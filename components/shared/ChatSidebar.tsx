@@ -6,7 +6,11 @@ import { ChatUserType } from "@/types/types";
 import { getChats } from "@/API/chats.api";
 import useChatStore from "@/store/chat.store";
 
-export const ChatSidebar = () => {
+export const ChatSidebar = ({
+  typingUsers,
+}: {
+  typingUsers: { [key: string]: boolean };
+}) => {
   const { page, search, limit } = { page: 1, search: "", limit: 15 };
   const { data, isLoading } = useQuery({
     queryKey: ["chat-users", page, search, limit],
@@ -15,6 +19,7 @@ export const ChatSidebar = () => {
 
   const chatData = useChatStore((state) => state);
 
+  
   return (
     <div className="bg-white py-3 rounded-2xl mt-3 sm:h-[85vh] h-[75vh] shadow-md overflow-y-auto">
       {isLoading ? (
@@ -28,7 +33,14 @@ export const ChatSidebar = () => {
             key={chat._id}
             chatId={chat._id}
             user={chat.participants[0]}
-            unreadMessages={1}
+            unreadMessages={
+              chat.lastMessage
+                ? chat.lastMessage.readBy.includes(chat.participants[0]._id)
+                  ? 0
+                  : 1
+                : 0
+            }
+            isTyping={typingUsers[chat.participants[0]._id]}
             lastMessage={chat.lastMessage?.message || ""}
             lastMessageTime={chat.lastMessage?.createdAt || ""}
             isActive={chat._id === chatData.chatId}
