@@ -23,10 +23,9 @@ export const Conversation = ({
 
   const { socket } = useSocket();
   useEffect(() => {
-    if (socket) {
+    if (socket && messages.length) {
       const lastMessageFromOtherUser =
-        messages.length && messages[messages.length - 1].sender !== user?._id;
-
+        messages[messages.length - 1].sender !== user?._id;
       if (lastMessageFromOtherUser) {
         socket.emit("markMessagesAsSeen", {
           chatId: chatData.chatId,
@@ -35,7 +34,7 @@ export const Conversation = ({
       }
 
       socket.on("messagesSeen", ({ chatId, userId }) => {
-        if (chatId === chatData.chatId && userId === user?._id) {
+        if (chatId === chatData.chatId && userId === chatData.userId) {
           setMessages((prev) =>
             prev.map((message) => {
               if (!message.readBy.includes(userId)) {
@@ -50,7 +49,13 @@ export const Conversation = ({
         }
       });
     }
-  }, [socket, user._id, chatData.chatId, messages]);
+
+    return () => {
+      if (socket) {
+        socket.off("messagesSeen");
+      }
+    };
+  }, [socket, user?._id, chatData.chatId, messages, chatData.userId]);
 
   const lastMessageRef = React.useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -61,8 +66,6 @@ export const Conversation = ({
       lastMessageRef.current?.scrollIntoView({ behavior: "instant" });
     }, 50);
   }, [messages, typingUsers]);
-
-  console.log(messages);
 
   return (
     <div className="relative mt-3 overflow-y-auto max-h-[75vh] h-full flex items-end gap-x-3 w-full bg-white py-3 rounded-2xl shadow-md">

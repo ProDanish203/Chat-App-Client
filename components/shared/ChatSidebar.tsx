@@ -19,7 +19,6 @@ export const ChatSidebar = ({
 
   const chatData = useChatStore((state) => state);
 
-  
   return (
     <div className="bg-white py-3 rounded-2xl mt-3 sm:h-[85vh] h-[75vh] shadow-md overflow-y-auto">
       {isLoading ? (

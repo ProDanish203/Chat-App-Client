@@ -107,6 +107,10 @@ export const SendChat = ({
     }
   }, [socket, chatId]);
 
+  useEffect(() => {
+    setMessage("");
+  }, [chatId, userId]);
+
   const handleSubmit = async () => {
     if (!message) return;
     if (!chatId) return toast.error("No chat selected");

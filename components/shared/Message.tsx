@@ -61,7 +61,7 @@ export const Message = ({
               <Check className="sm:size-4 size-3" />
             )}
             {isCurrentUser && hasDelivered && hasRead && (
-              <CheckCheck className="sm:size-4 size-3" />
+              <CheckCheck className="sm:size-4 size-3 " />
             )}
             {isCurrentUser && !hasDelivered && (
               <Clock className="sm:size-4 size-3" />
