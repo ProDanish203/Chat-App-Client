@@ -49,6 +49,7 @@ export interface ChatUserType {
     _id: string;
     message: string;
     readBy: string[];
+    sender: string;
     createdAt: string;
   };
 }

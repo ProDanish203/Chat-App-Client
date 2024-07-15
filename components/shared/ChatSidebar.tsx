@@ -5,6 +5,7 @@ import { ChatUser } from "./ChatUser";
 import { ChatUserType } from "@/types/types";
 import { getChats } from "@/API/chats.api";
 import useChatStore from "@/store/chat.store";
+import { useAuth } from "@/store/AuthProvider";
 
 export const ChatSidebar = ({
   typingUsers,
@@ -18,6 +19,7 @@ export const ChatSidebar = ({
   });
 
   const chatData = useChatStore((state) => state);
+  const { user } = useAuth();
 
   return (
     <div className="bg-white py-3 rounded-2xl mt-3 sm:h-[85vh] h-[75vh] shadow-md overflow-y-auto">
@@ -34,7 +36,10 @@ export const ChatSidebar = ({
             user={chat.participants[0]}
             unreadMessages={
               chat.lastMessage
-                ? chat.lastMessage.readBy.includes(chat.participants[0]._id)
+                ? chat.lastMessage?.sender === user._id
+                  ? 0
+                  : chat.lastMessage.sender !== user._id &&
+                    chat.lastMessage?.readBy.includes(user._id)
                   ? 0
                   : 1
                 : 0
