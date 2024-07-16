@@ -44,7 +44,7 @@ const RequestCard = ({ username, image, isPending, id }: RequestCardProps) => {
     mutationFn: acceptRejectRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["pending-requests", "chat-users"],
+        queryKey: ["incoming-requests", "chat-users"],
       });
     },
   });

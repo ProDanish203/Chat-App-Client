@@ -99,8 +99,14 @@ export const AddFriends = () => {
     } else return toast.error(response as string);
   };
 
+  const handleOpenChange = (state: boolean) => {
+    setOpen(state);
+    setSearch("");
+    setResults([]);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(e: boolean) => handleOpenChange(e)}>
       <DialogTrigger className="size-10 cursor-pointer hover:bg-white hover:text-primaryCol hover:border hover:border-primaryCol transition-all duration-200 rounded-full center text-textDark bg-primaryCol">
         <Plus />
       </DialogTrigger>
@@ -137,18 +143,21 @@ export const AddFriends = () => {
         </form>
 
         <div className="flex flex-col gap-y-3 max-h-[400px] overflow-y-auto">
-          {results.length > 0 &&
-            results.map((user: UserTypes) => (
-              <FriendCard
-                key={user._id}
-                avatar={user.avatar.url}
-                fullName={user.fullName}
-                username={user.username}
-                id={user._id}
-                setOpen={setOpen}
-                setSearch={setSearch}
-              />
-            ))}
+          {results.length > 0
+            ? results.map((user: UserTypes) => (
+                <FriendCard
+                  key={user._id}
+                  avatar={user.avatar.url}
+                  fullName={user.fullName}
+                  username={user.username}
+                  id={user._id}
+                  setOpen={setOpen}
+                  setSearch={setSearch}
+                />
+              ))
+            : search && (
+                <p className="text-sm text-neutral-500 ml-2">No users found</p>
+              )}
         </div>
       </DialogContent>
     </Dialog>

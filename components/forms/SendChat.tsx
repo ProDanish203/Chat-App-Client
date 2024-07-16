@@ -12,7 +12,7 @@ import {
 } from "react";
 import EmojiPicker from "emoji-picker-react";
 import useOutsideClick from "@/hooks/useOutsideClick";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { sendChat } from "@/API/chats.api";
 import { toast } from "sonner";
 import useChatStore from "@/store/chat.store";
@@ -88,8 +88,15 @@ export const SendChat = ({
     setShowEmojis(false);
   });
 
+  const queryClient = useQueryClient();
+
   const { mutateAsync, isPending } = useMutation({
     mutationFn: sendChat,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["chat-users"],
+      });
+    },
   });
 
   useEffect(() => {

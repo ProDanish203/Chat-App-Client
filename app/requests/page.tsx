@@ -6,12 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 
 const RequestPage = () => {
   const { data: incomingRequests, isLoading } = useQuery({
-    queryKey: ["incomingRequests"],
+    queryKey: ["incoming-requests"],
     queryFn: () => getRequests({ status: "incoming" }),
   });
 
   const { data: pendingRequests, isLoading: pendingLoading } = useQuery({
-    queryKey: ["pendingRequests"],
+    queryKey: ["pending-requests"],
     queryFn: () => getRequests({ status: "pending" }),
   });
   return (
