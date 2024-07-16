@@ -19,35 +19,44 @@ import useChatStore from "@/store/chat.store";
 import { useSocket } from "@/store/SocketProvider";
 import { MessageType } from "@/types/types";
 
-interface DisplayFileProps {
-  image: string;
-  setImage: (image: string) => void;
-  setFile: (file: File | null) => void;
+interface FileInfo {
+  file: File;
+  preview: string;
 }
 
-const DisplayFile = ({ image, setFile, setImage }: DisplayFileProps) => {
+interface DisplayFileProps {
+  files: FileInfo[];
+  removeFile: (index: number) => void;
+}
+
+const DisplayFiles = ({ files, removeFile }: DisplayFileProps) => {
   return (
-    <div className="absolute -top-[130px] pt-5 px-5 bg-white shadow-lg rounded-2xl z-10">
-      <div className="relative">
-        <Image
-          src={image}
-          alt="image"
-          width={100}
-          height={100}
-          className="w-24 h-20 rounded-lg object-cover cursor-pointer shadow-sm"
-        />
-        <button>
-          <span
-            className="-top-2 -right-2 shadow-sm absolute bg-red-500 text-white size-5 rounded-full center cursor-pointer"
-            onClick={() => {
-              setFile(null);
-              setImage("");
-            }}
-          >
-            <X className="size-4 " />
-          </span>
-        </button>
-      </div>
+    <div className="absolute -top-[130px] pt-5 px-5 bg-white shadow-lg rounded-2xl z-10 flex gap-2">
+      {files.map((file, index) => (
+        <div key={index} className="relative">
+          {file.file.type.startsWith("image/") ? (
+            <Image
+              src={file.preview}
+              alt={`file-${index}`}
+              width={100}
+              height={100}
+              className="w-24 h-20 rounded-lg object-cover cursor-pointer shadow-sm"
+            />
+          ) : (
+            <div className="w-24 h-20 rounded-lg flex items-center justify-center bg-gray-200">
+              {file.file.name.split(".").pop()}
+            </div>
+          )}
+          <button>
+            <span
+              className="-top-2 -right-2 shadow-sm absolute bg-red-500 text-white size-5 rounded-full center cursor-pointer"
+              onClick={() => removeFile(index)}
+            >
+              <X className="size-4" />
+            </span>
+          </button>
+        </div>
+      ))}
     </div>
   );
 };
@@ -65,19 +74,6 @@ export const SendChat = ({
   }));
 
   const { socket } = useSocket();
-
-  const [file, setFile] = useState<File | null>(null);
-  const [image, setImage] = useState("");
-
-  const handleFileChange = async (file: any) => {
-    try {
-      setFile(file);
-      const base64Image = await convertImage(file);
-      setImage(base64Image);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const [showEmojis, setShowEmojis] = useState(false);
   const [message, setMessage] = useState("");
@@ -118,14 +114,42 @@ export const SendChat = ({
     setMessage("");
   }, [chatId, userId]);
 
+  const [files, setFiles] = useState<FileInfo[]>([]);
+
+  const handleFileChange = async (selectedFiles: FileList | null) => {
+    if (!selectedFiles) return;
+
+    const newFiles = Array.from(selectedFiles).slice(0, 5 - files.length);
+
+    const filePromises = newFiles.map(async (file) => {
+      const preview = await convertImage(file);
+      return { file, preview };
+    });
+
+    const newFileInfos = await Promise.all(filePromises);
+    setFiles((prevFiles) => [...prevFiles, ...newFileInfos].slice(0, 5));
+  };
+
+  const removeFile = (index: number) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async () => {
-    if (!message) return;
+    if (!message && files.length === 0) return;
     if (!chatId) return toast.error("No chat selected");
+
+    const formData = new FormData();
+    message && formData.append("message", message);
+    files.forEach((fileInfo) => {
+      formData.append(`attachments`, fileInfo.file);
+    });
+
     const { response, success } = await mutateAsync({
       chatId,
-      message,
+      formData,
     });
     if (success) {
+      setFiles([]);
       setMessage("");
     } else return toast.error(response as string);
   };
@@ -191,8 +215,9 @@ export const SendChat = ({
             type="file"
             className="hidden"
             id="file"
-            accept="image/jpeg, image/png"
-            onChange={(e) => handleFileChange(e.target.files?.[0])}
+            multiple
+            accept="*/*"
+            onChange={(e) => handleFileChange(e.target.files)}
           />
           {/* Text input */}
           <input
@@ -217,8 +242,8 @@ export const SendChat = ({
       </div>
 
       {/* Show file if any */}
-      {file && image && (
-        <DisplayFile image={image} setImage={setImage} setFile={setFile} />
+      {files.length > 0 && (
+        <DisplayFiles files={files} removeFile={removeFile} />
       )}
 
       {/* Action Buttons */}
@@ -236,7 +261,30 @@ export const SendChat = ({
           disabled={isPending}
           className="disabled:opacity-80 disabled:cursor-not-allowed center w-full h-full bg-primaryCol text-textDark py-3 px-5 rounded-2xl shadow-md cursor-pointer"
         >
-          <Send />
+          {isPending ? (
+            <svg
+              className="animate-spin size-5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          ) : (
+            <Send />
+          )}
         </button>
       </div>
     </div>

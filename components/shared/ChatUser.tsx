@@ -1,6 +1,7 @@
 import useChatStore, { getStateValues } from "@/store/chat.store";
 import { ChatUser as ChatUserType } from "@/types/types";
 import { format } from "date-fns";
+import { Images } from "lucide-react";
 import Image from "next/image";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   lastMessageTime: string;
   isActive?: boolean;
   isTyping: boolean;
+  isLastMessageAttachment?: boolean;
 }
 
 export const ChatUser = ({
@@ -21,6 +23,7 @@ export const ChatUser = ({
   lastMessageTime,
   isActive,
   isTyping,
+  isLastMessageAttachment,
 }: Props) => {
   const formattedDate = lastMessageTime
     ? format(new Date(lastMessageTime), "hh:mm a")
@@ -63,9 +66,16 @@ export const ChatUser = ({
           <p className="text-sm text-primaryCol line-clamp-1 font-medium font-roboto">
             Typing...
           </p>
+        ) : isLastMessageAttachment ? (
+          <div className="flex gap-x-1 items-center">
+            <Images className="size-4 text-neutral-400" />
+            <p className="text-sm text-neutral-400 line-clamp-1 font-roboto">
+              Attachments
+            </p>
+          </div>
         ) : (
           lastMessage && (
-            <p className="text-sm text-neutral-400 line-clamp-1 font-roboto">
+            <p className="sm:max-w-[100px] text-sm text-neutral-400 line-clamp-1 font-roboto">
               {lastMessage.length > 30
                 ? lastMessage.slice(0, 30) + "..."
                 : lastMessage}

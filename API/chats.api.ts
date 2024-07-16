@@ -46,14 +46,16 @@ export const getMessages = async (chatId: string) => {
 
 export const sendChat = async ({
   chatId,
-  message,
+  formData,
 }: {
   chatId: string;
-  message: string;
+  formData: FormData;
 }) => {
   try {
-    const { data } = await api.post(`/chats/${chatId}`, {
-      message,
+    const { data } = await api.post(`/chats/${chatId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
     if (!data.success)

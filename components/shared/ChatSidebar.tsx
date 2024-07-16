@@ -46,6 +46,9 @@ export const ChatSidebar = ({
             }
             isTyping={typingUsers[chat.participants[0]._id]}
             lastMessage={chat.lastMessage?.message || ""}
+            isLastMessageAttachment={
+              chat.lastMessage && chat.lastMessage?.attachments?.length > 0
+            }
             lastMessageTime={chat.lastMessage?.createdAt || ""}
             isActive={chat._id === chatData.chatId}
           />

@@ -96,9 +96,11 @@ export const Conversation = ({
         )}
         {typingUsers[chatData.userId] && (
           <div className="relative w-28 h-10 bg-neutral-200 rounded-full py-4 center msg-radius">
-            <div className="typing__dot"></div>
-            <div className="typing__dot"></div>
-            <div className="typing__dot"></div>
+            <div className="flex flex-row gap-2">
+              <div className="size-3 rounded-full bg-secondaryCol animate-bounce"></div>
+              <div className="size-3 rounded-full bg-secondaryCol animate-bounce [animation-delay:-.3s]"></div>
+              <div className="size-3 rounded-full bg-secondaryCol animate-bounce [animation-delay:-.5s]"></div>
+            </div>
           </div>
         )}
       </div>
