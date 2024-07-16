@@ -15,9 +15,9 @@ export default function MainLayout({
 
         {children}
         {!isChat && (
-          <div className="lg:hidden w-full">
+          // <div className="lg:hidden w-full">
             <BottomBar />
-          </div>
+          // </div>
         )}
       </SocketProvider>
     </main>

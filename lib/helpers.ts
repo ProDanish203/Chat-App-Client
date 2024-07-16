@@ -21,3 +21,11 @@ export const convertDateToYYYYMMDD = (date: any) => {
   const day = String(jsDate.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+export const getFileType = (url: string) => {
+  // @ts-ignore
+  const extension = url.split(".").pop().toLowerCase();
+  if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension)) return "image";
+  if (["mp4", "webm", "ogg"].includes(extension)) return "video";
+  if (["mp3", "wav", "ogg"].includes(extension)) return "audio";
+  return "other";
+};

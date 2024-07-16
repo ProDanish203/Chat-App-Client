@@ -1,8 +1,9 @@
 "use client";
 import { getRequests } from "@/API/request.api";
 import MainLayout from "@/components/layouts/MainLayout";
-import { AddFriends, RequestSlider } from "@/components/shared";
+import { AddFriends, RequestSlider, Requests } from "@/components/shared";
 import { useQuery } from "@tanstack/react-query";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const RequestPage = () => {
   const { data: incomingRequests, isLoading } = useQuery({
@@ -25,18 +26,25 @@ const RequestPage = () => {
             <AddFriends />
           </div>
         </div>
-
-        <RequestSlider
-          title="Incoming Requests"
-          isLoading={isLoading}
-          data={incomingRequests && incomingRequests.response}
-        />
-        <RequestSlider
-          title="Pending Requests"
-          isLoading={pendingLoading}
-          data={pendingRequests && pendingRequests.response}
-          isPending
-        />
+        <Tabs defaultValue="incoming" className="sm:max-w-[500px] w-full mt-5">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="incoming">Incoming</TabsTrigger>
+            <TabsTrigger value="pending">Pending</TabsTrigger>
+          </TabsList>
+          <TabsContent value="incoming">
+            <Requests
+              isLoading={isLoading}
+              data={incomingRequests && incomingRequests.response}
+            />
+          </TabsContent>
+          <TabsContent value="pending">
+            <Requests
+              isLoading={pendingLoading}
+              data={pendingRequests && pendingRequests.response}
+              isPending
+            />
+          </TabsContent>
+        </Tabs>
       </section>
     </MainLayout>
   );

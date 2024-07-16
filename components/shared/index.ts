@@ -1,3 +1,4 @@
+import { Requests } from "./Requests";
 import { BottomBar } from "./BottomBar";
 import { RequestSlider } from "./RequestSlider";
 import { ConversationOptions } from "./ConversationOptions";
@@ -26,4 +27,5 @@ export {
   AddFriends,
   RequestSlider,
   BottomBar,
+  Requests,
 };

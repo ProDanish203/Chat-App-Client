@@ -34,7 +34,7 @@ const RequestCard = ({ username, image, isPending, id }: RequestCardProps) => {
       mutationFn: withdrawRequest,
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["pending-requests", "chat-users"],
+          queryKey: ["pending-requests"],
         });
       },
     }

@@ -77,10 +77,10 @@ export const Conversation = ({
             <div key={`${message._id}-${idx}`} ref={lastMessageRef}>
               <Message
                 message={message.message}
+                attachments={message.attachments}
                 isCurrentUser={message.sender === user?._id}
                 userImage={chatData.avatar.url}
                 sentTime={message.createdAt}
-                isTyping={typingUsers[chatData.userId]}
                 hasRead={message.readBy.includes(chatData.userId)}
                 hasDelivered={true}
               />

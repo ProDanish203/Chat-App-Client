@@ -47,7 +47,12 @@ export interface ChatUserType {
   participants: ChatUser[];
   lastMessage?: {
     _id: string;
-    message: string;
+    message?: string;
+    attachments: {
+      public_id: string;
+      url: string;
+      _id: string;
+    }[];
     readBy: string[];
     sender: string;
     createdAt: string;
@@ -58,8 +63,12 @@ export interface MessageType {
   _id: string;
   chatId: string;
   sender: string;
-  message: string;
-  attachments?: string[];
+  message?: string;
+  attachments: {
+    public_id: string;
+    url: string;
+    _id: string;
+  }[];
   readBy: string[];
   createdAt: string;
   updatedAt: string;
