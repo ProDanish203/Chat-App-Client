@@ -23,9 +23,16 @@ export const convertDateToYYYYMMDD = (date: any) => {
 };
 export const getFileType = (url: string) => {
   // @ts-ignore
-  const extension = url.split(".").pop().toLowerCase();
-  if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension)) return "image";
-  if (["mp4", "webm", "ogg"].includes(extension)) return "video";
-  if (["mp3", "wav", "ogg"].includes(extension)) return "audio";
+  // const extension = url.split(".").pop().toLowerCase();
+  // if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension)) return "image";
+  // if (["mp4", "webm", "ogg"].includes(extension)) return "video";
+  // if (["mp3", "wav", "ogg"].includes(extension)) return "audio";
+  // return "other";
+  const extension = url.split(".").pop()?.toLowerCase();
+  if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension ?? ""))
+    return "image";
+  if (["mp4", "webm"].includes(extension ?? "")) return "video";
+  if (["mp3", "wav"].includes(extension ?? "")) return "audio";
+  if (extension === "ogg") return "audio";
   return "other";
 };

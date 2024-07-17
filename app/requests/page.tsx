@@ -1,7 +1,7 @@
 "use client";
 import { getRequests } from "@/API/request.api";
 import MainLayout from "@/components/layouts/MainLayout";
-import { AddFriends, RequestSlider, Requests } from "@/components/shared";
+import { AddFriends, Requests } from "@/components/shared";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

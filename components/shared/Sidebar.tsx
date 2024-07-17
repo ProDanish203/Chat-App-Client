@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { UserProfile } from "./UserProfile";
+import { UserProfile } from "../helpers";
 import { Bell, Mail, MessageCircleMore } from "lucide-react";
 import {
   Tooltip,

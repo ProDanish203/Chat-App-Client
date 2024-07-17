@@ -2,7 +2,7 @@
 import { Bell, Mail, MessageCircleMore, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserProfile } from "./UserProfile";
+import { UserProfile } from "../helpers/UserProfile";
 
 export const BottomBar = () => {
   const pathname = usePathname();

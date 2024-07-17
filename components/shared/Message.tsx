@@ -127,7 +127,11 @@ export const Message = ({
                     </div>
                   ) : getFileType(media.url) === "audio" ? (
                     <div className="max-w-[250px] w-full">
-                      <audio src={media.url} controls className="max-xs:w-[200px] w-[250px]"></audio>
+                      <audio
+                        src={media.url}
+                        controls
+                        className="max-xs:w-[200px] w-[250px] rounded-lg"
+                      ></audio>
                     </div>
                   ) : (
                     <a

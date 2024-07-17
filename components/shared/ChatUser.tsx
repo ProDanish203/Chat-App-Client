@@ -40,7 +40,7 @@ export const ChatUser = ({
       avatar: user.avatar,
     });
   };
-
+  
   return (
     <div
       onClick={handleChatUserClick}

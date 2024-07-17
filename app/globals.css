@@ -120,38 +120,36 @@
   -o-border-radius: 20px 20px 0px 20px;
 }
 
-/* Typing animation */
-.typing__dot {
-  float: left;
-  width: 8px;
-  height: 8px;
-  margin: 0 4px;
-  background: #8d8c91;
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: var(--primaryCol);
   border-radius: 50%;
-  opacity: 0;
-  animation: loadingFade 1s infinite;
+  transform: translate(-50%, -50%) scale(0);
+  animation: rippleEffect 1s infinite;
+  -webkit-transform: translate(-50%, -50%) scale(0);
+  -moz-transform: translate(-50%, -50%) scale(0);
+  -ms-transform: translate(-50%, -50%) scale(0);
+  -o-transform: translate(-50%, -50%) scale(0);
+  -webkit-animation: rippleEffect 1s infinite;
 }
 
-.typing__dot:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.typing__dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing__dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes loadingFade {
+@keyframes rippleEffect {
   0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
   }
   100% {
+    transform: translate(-50%, -50%) scale(1.5);
     opacity: 0;
   }
 }

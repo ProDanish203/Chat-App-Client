@@ -1,13 +1,12 @@
 import { Requests } from "./Requests";
 import { BottomBar } from "./BottomBar";
-import { RequestSlider } from "./RequestSlider";
 import { ConversationOptions } from "./ConversationOptions";
 import { AddFriends } from "./AddFriends";
 import { Message } from "./Message";
 import { ChatUser } from "./ChatUser";
 import { Chats } from "./Chats";
 import { ChatHeader } from "./ChatHeader";
-import { UserProfile } from "./UserProfile";
+import { UserProfile } from "../helpers/UserProfile";
 import { Sidebar } from "./Sidebar";
 import { ChatSidebar } from "./ChatSidebar";
 import { ConversationHeader } from "./ConversationHeader";
@@ -25,7 +24,6 @@ export {
   Conversation,
   Message,
   AddFriends,
-  RequestSlider,
   BottomBar,
   Requests,
 };
