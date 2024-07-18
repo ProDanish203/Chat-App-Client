@@ -18,49 +18,12 @@ import { toast } from "sonner";
 import useChatStore from "@/store/chat.store";
 import { useSocket } from "@/store/SocketProvider";
 import { MessageType } from "@/types/types";
-import { VoiceRecorder } from "../helpers";
+import { DisplayFiles, VoiceRecorder } from "../helpers";
 
 interface FileInfo {
   file: File;
   preview: string;
 }
-
-interface DisplayFileProps {
-  files: FileInfo[];
-  removeFile: (index: number) => void;
-}
-
-const DisplayFiles = ({ files, removeFile }: DisplayFileProps) => {
-  return (
-    <div className="absolute -top-[130px] pt-5 px-5 bg-white shadow-lg rounded-2xl z-10 flex gap-2">
-      {files.map((file, index) => (
-        <div key={index} className="relative">
-          {file.file.type.startsWith("image/") ? (
-            <Image
-              src={file.preview}
-              alt={`file-${index}`}
-              width={100}
-              height={100}
-              className="w-24 h-20 rounded-lg object-cover cursor-pointer shadow-sm"
-            />
-          ) : (
-            <div className="w-24 h-20 rounded-lg flex items-center justify-center bg-gray-200">
-              {file.file.name.split(".").pop()}
-            </div>
-          )}
-          <button>
-            <span
-              className="-top-2 -right-2 shadow-sm absolute bg-red-500 text-white size-5 rounded-full center cursor-pointer"
-              onClick={() => removeFile(index)}
-            >
-              <X className="size-4" />
-            </span>
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 export const SendChat = ({
   setMessages,
@@ -76,8 +39,8 @@ export const SendChat = ({
 
   const { socket } = useSocket();
 
-  const [showEmojis, setShowEmojis] = useState(false);
   const [message, setMessage] = useState("");
+  const [showEmojis, setShowEmojis] = useState(false);
 
   const emojiRef = useRef<HTMLDivElement>(null);
 
@@ -216,6 +179,7 @@ export const SendChat = ({
             className="hidden"
             id="file"
             multiple
+            disabled={isPending}
             accept="*/*"
             onChange={(e) => handleFileChange(e.target.files)}
           />
@@ -225,6 +189,7 @@ export const SendChat = ({
             placeholder="Type a message"
             className="text-sm w-full h-full bg-transparent outline-none text-text border-none"
             value={message}
+            disabled={isPending}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setMessage(e.target.value)
             }
@@ -249,6 +214,7 @@ export const SendChat = ({
       {/* Action Buttons */}
       <div className="max-sm:hidden flex items-center gap-x-2 h-full max-md:pr-2">
         <VoiceRecorder sendMessage={handleSubmit} setFiles={setFiles} />
+        {/* Send Button */}
         <button
           type="submit"
           onClick={handleSubmit}
