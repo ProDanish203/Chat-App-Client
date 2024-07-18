@@ -1,6 +1,6 @@
 import { Requests } from "./Requests";
 import { BottomBar } from "./BottomBar";
-import { ConversationOptions } from "./ConversationOptions";
+import { ConversationOptions } from "../helpers/ConversationOptions";
 import { AddFriends } from "./AddFriends";
 import { Message } from "./Message";
 import { ChatUser } from "./ChatUser";

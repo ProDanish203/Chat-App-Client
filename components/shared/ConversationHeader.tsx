@@ -1,6 +1,6 @@
 import { ArrowLeft, Phone, User } from "lucide-react";
 import Image from "next/image";
-import { ConversationOptions } from "./ConversationOptions";
+import { ConversationOptions } from "../helpers";
 import useChatStore, { getStateValues } from "@/store/chat.store";
 import { useSocket } from "@/store/SocketProvider";
 
@@ -65,7 +65,7 @@ export const ConversationHeader = () => {
           </span>
         </button>
 
-        <ConversationOptions />
+        <ConversationOptions userId={chatData.userId} />
       </div>
     </div>
   );

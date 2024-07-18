@@ -75,15 +75,33 @@ export const Conversation = ({
         ) : chatData && messages && messages.length > 0 ? (
           messages.map((message: MessageType, idx: number) => (
             <div key={`${message._id}-${idx}`} ref={lastMessageRef}>
-              <Message
-                message={message.message}
-                attachments={message.attachments}
-                isCurrentUser={message.sender === user?._id}
-                userImage={chatData.avatar.url}
-                sentTime={message.createdAt}
-                hasRead={message.readBy.includes(chatData.userId)}
-                hasDelivered={true}
-              />
+              {message.attachments.length > 0
+                ? // Render attachments separately
+                  message.attachments.map((attachment, attachmentIdx) => (
+                    <Message
+                      key={`${message._id}-attachment-${attachmentIdx}`}
+                      message=""
+                      attachments={[attachment]}
+                      isCurrentUser={message.sender === user?._id}
+                      userImage={chatData.avatar.url}
+                      sentTime={message.createdAt}
+                      hasRead={message.readBy.includes(chatData.userId)}
+                      hasDelivered={true}
+                    />
+                  ))
+                : null}
+              {/* Render text message if it exists */}
+              {message.message && (
+                <Message
+                  message={message.message}
+                  attachments={[]}
+                  isCurrentUser={message.sender === user?._id}
+                  userImage={chatData.avatar.url}
+                  sentTime={message.createdAt}
+                  hasRead={message.readBy.includes(chatData.userId)}
+                  hasDelivered={true}
+                />
+              )}
             </div>
           ))
         ) : (
