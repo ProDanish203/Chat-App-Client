@@ -11,7 +11,7 @@ export const getMyFriends = async ({
 }) => {
   try {
     const { data } = await api.get(
-      `/request/all-friends?limit=${limit || 15}&page=${page || 1}&search=${
+      `/friends/all?limit=${limit || 15}&page=${page || 1}&search=${
         search || ""
       }`
     );
@@ -34,31 +34,13 @@ export const getMyFriends = async ({
   }
 };
 
-export const getSearchedUsers = async (search: string) => {
-  try {
-    const { data } = await api.post(`/request/users`, { search });
 
-    if (!data.success)
-      return {
-        success: false,
-        response: "Something went wrong",
-      };
-
-    return {
-      success: true,
-      response: data,
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      response: error?.response?.data?.message || "Something went wrong",
-    };
-  }
-};
 
 export const sendRequest = async (id: string) => {
   try {
-    const { data } = await api.post(`/request/send`, { receiverId: id });
+    const { data } = await api.post(`/friends/send-request`, {
+      receiverId: id,
+    });
 
     if (!data.success)
       return {
@@ -89,7 +71,7 @@ export const acceptRejectRequest = async ({
     if (!["approved", "rejected"].includes(status))
       return { success: false, response: "Invalid status" };
 
-    const { data } = await api.put(`/request/accept-reject-request/${id}`, {
+    const { data } = await api.put(`/friends/accept-reject-request/${id}`, {
       status,
     });
 
@@ -125,7 +107,7 @@ export const getRequests = async ({
       return { success: false, response: "Invalid status" };
 
     const { data } = await api.get(
-      `/request/${status}?limit=${limit || 15}&page=${page || 1}`
+      `/friends/${status}-requests?limit=${limit || 15}&page=${page || 1}`
     );
 
     if (!data.success)
@@ -148,7 +130,7 @@ export const getRequests = async ({
 
 export const withdrawRequest = async (id: string) => {
   try {
-    const { data } = await api.delete(`/request/withdraw/${id}`);
+    const { data } = await api.delete(`/friends/withdraw-request/${id}`);
 
     if (!data.success)
       return {
