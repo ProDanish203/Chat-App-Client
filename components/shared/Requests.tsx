@@ -66,7 +66,7 @@ const RequestCard = ({ id, image, fullName, isPending }: RequestCardProps) => {
           alt={fullName}
           width={100}
           height={100}
-          className="size-20 rounded-full"
+          className="size-20 rounded-full object-cover"
         />
       </div>
 
@@ -111,7 +111,7 @@ export const Requests = ({ data, isLoading, isPending }: Props) => {
       {isLoading ? (
         // <RequestSkeleton />
         <p>Loading...</p>
-      ) : data && data.data.length > 0 ? (
+      ) : data && data.data && data.data.length > 0 ? (
         data.data.map((request: any, index: number) => (
           <div key={index} className="w-full">
             {!isPending ? (

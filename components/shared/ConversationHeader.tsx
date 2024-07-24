@@ -16,7 +16,7 @@ export const ConversationHeader = () => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-x-3 w-full bg-white py-1 px-5 rounded-2xl shadow-md">
+    <div className="flex items-center justify-between gap-x-3 w-full bg-white py-1 xs:px-5 px-2 rounded-2xl shadow-md">
       <div className="flex items-center sm:gap-x-4 gap-x-2 py-3 w-full">
         <button onClick={handleBackButton} className="md:hidden">
           <ArrowLeft className="size-5" />

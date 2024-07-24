@@ -15,6 +15,7 @@ const RequestPage = () => {
     queryKey: ["pending-requests"],
     queryFn: () => getRequests({ status: "pending" }),
   });
+
   return (
     <MainLayout>
       <section className="w-full relative">

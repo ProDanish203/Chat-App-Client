@@ -34,8 +34,6 @@ export const getMyFriends = async ({
   }
 };
 
-
-
 export const sendRequest = async (id: string) => {
   try {
     const { data } = await api.post(`/friends/send-request`, {

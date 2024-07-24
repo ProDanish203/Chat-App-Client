@@ -40,7 +40,7 @@ export const ChatUser = ({
       avatar: user.avatar,
     });
   };
-  
+
   return (
     <div
       onClick={handleChatUserClick}
@@ -53,7 +53,7 @@ export const ChatUser = ({
         alt={user.username}
         width={200}
         height={200}
-        className="rounded-full size-12"
+        className="rounded-full size-12 object-cover"
       />
 
       <div className="flex flex-col gap-y-1 w-full">
